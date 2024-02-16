@@ -52,7 +52,6 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
 cmp.setup({
     mapping = cmp_mappings,
     formatting = {
-        fields = { "abbr", "kind" },
         format = function(_, vim_item)
             vim_item.kind = (icons[vim_item.kind])
             return vim_item
