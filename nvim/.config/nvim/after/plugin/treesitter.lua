@@ -20,3 +20,16 @@ require 'nvim-treesitter.configs'.setup {
         additional_vim_regex_highlighting = false,
     },
 }
+
+local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
+parser_config.cds = {
+    install_info = {
+        -- local path or git repo
+        -- url = "~/apps/tree-sitter-cds",
+        url = "~/apps/tree-sitter-cds",
+        files = { "src/parser.c", "src/scanner.c" }
+    },
+    filetype = "cds",
+    -- additional filetypes that use this parser
+    used_by = { "cdl", "hdbcds" }
+}

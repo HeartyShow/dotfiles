@@ -55,12 +55,36 @@ vim.fn.sign_define('DiagnosticSignWarn', { text = '', texthl = 'DiagnosticSig
 vim.fn.sign_define('DiagnosticSignInfo', { text = '', texthl = 'DiagnosticSignInfo' })
 vim.fn.sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSignHint' })
 
-require('mason').setup()
+vim.api.nvim_command('autocmd BufNewFile,BufRead *.cds setfiletype cds')
 
+-- CDS
+local configs = require 'lspconfig.configs'
+if not configs.sapcds_lsp then
+    configs.sapcds_lsp = {
+        default_config = {
+            cmd = {
+                "cds-lsp",
+                '--stdio'
+            },
+            filetypes = { 'cds' },
+            root_dir = require('lspconfig').util.root_pattern('.git', 'package.json'),
+            settings = {}
+        }
+    }
+end
+if require('lspconfig').sapcds_lsp.setup then
+    require('lspconfig').sapcds_lsp.setup {
+        -- capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+    }
+end
+
+require('mason').setup()
 require('mason-lspconfig').setup({
     ensure_installed = { 'jdtls' },
     handlers = {
-        lsp.default_setup,
+        function(server_name)
+            require('lspconfig')[server_name].setup {}
+        end,
         lua_ls = function()
             local lua_opts = lsp.nvim_lua_ls()
             require('lspconfig').lua_ls.setup(lua_opts)
