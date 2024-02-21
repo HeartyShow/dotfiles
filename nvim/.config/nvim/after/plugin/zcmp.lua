@@ -29,7 +29,7 @@ local icons = {
 }
 
 local cmp_mappings = lsp.defaults.cmp_mappings({
-    ['<CR>'] = cmp.mapping.confirm({ select = false }),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
     ["<C-Space>"] = cmp.mapping.complete(),
     ['<Tab>'] = cmp.mapping(function(fallback)
         if cmp.visible() then
@@ -57,4 +57,7 @@ cmp.setup({
             return vim_item
         end,
     },
+    completion = {
+        completeopt = "menu,menuone,noinsert"
+    }
 })

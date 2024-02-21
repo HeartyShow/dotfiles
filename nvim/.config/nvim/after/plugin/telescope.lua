@@ -29,10 +29,17 @@ vim.keymap.set('n', '<leader>vh', builtin.help_tags, {})
 require("telescope").load_extension("aerial")
 vim.keymap.set('n', '<leader>o', ':Telescope aerial<CR>')
 
+local actions = require("telescope.actions")
 require("telescope").setup({
     defaults = {
         path_display = {
             smart = true
+        },
+        mappings = {
+            i = {
+                ["<C-v>"] = actions.select_vertical,
+                ["<C-b>"] = actions.select_horizontal,
+            }
         }
     }
 })

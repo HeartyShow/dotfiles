@@ -61,3 +61,4 @@ require("catppuccin").setup({
 })
 
 vim.cmd.colorscheme "catppuccin"
+vim.opt.cursorline = true

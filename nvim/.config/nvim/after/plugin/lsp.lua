@@ -33,7 +33,7 @@ lsp.on_attach(function(client, bufnr)
     nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
     -- See `:help K` for why this keymap
-    nmap('<C-k>', vim.lsp.buf.hover, 'Hover Documentation')
+    nmap('<C-i>', vim.lsp.buf.hover, 'Hover Documentation')
 
     -- Lesser used LSP functionality
     nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -54,8 +54,6 @@ vim.fn.sign_define('DiagnosticSignError', { text = '', texthl = 'DiagnosticSi
 vim.fn.sign_define('DiagnosticSignWarn', { text = '', texthl = 'DiagnosticSignWarn' })
 vim.fn.sign_define('DiagnosticSignInfo', { text = '', texthl = 'DiagnosticSignInfo' })
 vim.fn.sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSignHint' })
-
-vim.api.nvim_command('autocmd BufNewFile,BufRead *.cds setfiletype cds')
 
 -- CDS
 local configs = require 'lspconfig.configs'
