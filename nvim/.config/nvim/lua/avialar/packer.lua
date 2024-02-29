@@ -11,10 +11,10 @@ return require('packer').startup(function(use)
 
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.3',
-        requires = { { 'nvim-lua/plenary.nvim' } }
+        requires = { { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-project.nvim', 'nvim-telescope/telescope-live-grep-args.nvim' } }
     }
     use {
-        "nvim-telescope/telescope-file-browser.nvim",
+        'nvim-telescope/telescope-file-browser.nvim',
         requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
     }
 
@@ -24,15 +24,6 @@ return require('packer').startup(function(use)
             require("aerial").setup()
         end,
     })
-
-    use {
-        "ahmedkhalf/project.nvim",
-        config = function()
-            require("project_nvim").setup {
-            }
-            require('telescope').load_extension('projects')
-        end
-    }
 
     use({
         "folke/trouble.nvim",

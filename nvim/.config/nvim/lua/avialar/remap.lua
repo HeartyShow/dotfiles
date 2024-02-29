@@ -55,4 +55,3 @@ vim.keymap.set("n", "é", "<Cmd>:AerialNext<CR>")
 vim.keymap.set("n", "&", "<Cmd>:AerialPrev<CR>")
 
 vim.keymap.set("n", "<leader>gi", "<Cmd>:LazyGit<CR>")
-vim.keymap.set("n", "<leader>pr", "<Cmd>:lua require'telescope'.extensions.projects.projects{}<CR>")
