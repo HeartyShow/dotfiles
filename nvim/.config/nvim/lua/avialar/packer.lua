@@ -202,4 +202,6 @@ return require('packer').startup(function(use)
         padding = '16',
         language = 'auto'
     }
+
+    use('xiyaowong/virtcolumn.nvim')
 end)
