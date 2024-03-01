@@ -63,6 +63,20 @@ require("telescope").setup({
             height = 0.80,
             preview_cutoff = 120,
         },
+        vimgrep_arguments = {
+            'rg',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case',
+            '-u'
+        },
+        file_ignore_patterns = {
+            'node_modules',
+            '.git'
+        },
     },
     extensions = {
         project = {

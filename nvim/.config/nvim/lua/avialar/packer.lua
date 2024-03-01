@@ -195,4 +195,8 @@ return require('packer').startup(function(use)
     }
 
     use('xiyaowong/virtcolumn.nvim')
+    use { 'asiryk/auto-hlsearch.nvim',
+        config = function()
+            require("auto-hlsearch").setup()
+        end }
 end)
