@@ -15,7 +15,7 @@ dashboard.section.header.val = {
 
 -- Set menu
 dashboard.section.buttons.val = {
-    dashboard.button( "p", "󰅭  Projects" , ":<cmd>lua require'telescope'.extensions.projects.projects{}<CR>"),
+    dashboard.button( "p", "󰅭  Projects" , ":lua require'telescope'.extensions.project.project{display_type = 'full'}<CR>"),
     dashboard.button( "r", "󱦟  Recent"   , ":Telescope oldfiles<CR>"),
     dashboard.button( "f", "  Find file", ":cd $HOME/documents/dev | Telescope find_files<CR>"),
     dashboard.button( "e", "  New file" , ":ene <BAR> startinsert <CR>"),

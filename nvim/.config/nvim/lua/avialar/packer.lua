@@ -140,7 +140,15 @@ return require('packer').startup(function(use)
         requires = { 'nvim-tree/nvim-web-devicons' },
     }
 
-    use "stevearc/dressing.nvim"
+    use { "stevearc/dressing.nvim",
+        config = function()
+            require("dressing").setup({
+                input = {
+                    trim_prompt = true,
+                    title_pos = "center",
+                }
+            })
+        end }
 
     use({
         "ziontee113/icon-picker.nvim",
@@ -199,4 +207,11 @@ return require('packer').startup(function(use)
         config = function()
             require("auto-hlsearch").setup()
         end }
+
+    use {
+        "ahmedkhalf/project.nvim",
+        config = function()
+            require("project_nvim").setup {}
+        end
+    }
 end)
