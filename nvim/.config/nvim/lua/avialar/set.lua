@@ -26,8 +26,8 @@ vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 
--- vim.opt.colorcolumn = "120"
 vim.opt.cursorline = true
+-- vim.opt.colorcolumn = "120"
 
 vim.api.nvim_create_autocmd("VimEnter", { command = ":so $NVIM_DIR/lua/avialar/packer.lua" })
 vim.api.nvim_create_autocmd("TextYankPost", { command = ":lua vim.highlight.on_yank()" })

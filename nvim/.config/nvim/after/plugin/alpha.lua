@@ -17,7 +17,7 @@ dashboard.section.header.val = {
 dashboard.section.buttons.val = {
     dashboard.button( "p", "󰅭  Projects" , ":lua require'telescope'.extensions.project.project{display_type = 'full'}<CR>"),
     dashboard.button( "r", "󱦟  Recent"   , ":Telescope oldfiles<CR>"),
-    dashboard.button( "f", "  Find file", ":cd $HOME/documents/dev | Telescope find_files<CR>"),
+    dashboard.button( "f", "  Find file", ":cd $HOME/documents/dev | Telescope find_files<CR>"),
     dashboard.button( "e", "  New file" , ":ene <BAR> startinsert <CR>"),
     dashboard.button( "u", "󰧩  Update"   , ":PackerSync<CR>"),
     dashboard.button( "s", "  Settings" , ":e $NVIM_DIR<CR>"),

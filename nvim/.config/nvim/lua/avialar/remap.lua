@@ -48,6 +48,11 @@ vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
 
+vim.keymap.set('n', '<Tab>', '>>', {})
+vim.keymap.set('v', '<Tab>', '>gv', {})
+vim.keymap.set('n', '<S-Tab>', '<<', {})
+vim.keymap.set('v', '<S-Tab>', '<gv', {})
+
 vim.keymap.set("n", "<C-o>", "<C-o>zz")
 vim.keymap.set("n", "<C-i>", "<C-i>zz")
 
