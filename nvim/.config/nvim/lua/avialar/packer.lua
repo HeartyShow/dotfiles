@@ -218,4 +218,6 @@ return require('packer').startup(function(use)
             require("project_nvim").setup {}
         end
     }
+
+    use('ThePrimeagen/vim-be-good')
 end)

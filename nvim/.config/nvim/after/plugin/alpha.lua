@@ -15,13 +15,14 @@ dashboard.section.header.val = {
 
 -- Set menu
 dashboard.section.buttons.val = {
-    dashboard.button( "p", "󰅭  Projects" , ":lua require'telescope'.extensions.project.project{display_type = 'full'}<CR>"),
-    dashboard.button( "r", "󱦟  Recent"   , ":Telescope oldfiles<CR>"),
-    dashboard.button( "f", "  Find file", ":cd $HOME/documents/dev | Telescope find_files<CR>"),
-    dashboard.button( "e", "  New file" , ":ene <BAR> startinsert <CR>"),
-    dashboard.button( "u", "󰧩  Update"   , ":PackerSync<CR>"),
-    dashboard.button( "s", "  Settings" , ":e $NVIM_DIR<CR>"),
-    dashboard.button( "q", "󰗼  Quit NVIM", ":qa<CR>"),
+    dashboard.button( "p", "󰅭  Projects"   , ":lua require'telescope'.extensions.project.project{display_type = 'full'}<CR>"),
+    dashboard.button( "r", "󱦟  Recent"     , ":Telescope oldfiles<CR>"),
+    dashboard.button( "f", "  Find file"  , ":cd $HOME/documents/dev | Telescope find_files<CR>"),
+    dashboard.button( "e", "  New file"   , ":ene <BAR> startinsert <CR>"),
+    dashboard.button( "u", "󰧩  Update"     , ":PackerSync<CR>"),
+    dashboard.button( "s", "  Settings"   , ":e $NVIM_DIR<CR>"),
+    dashboard.button( "v", "󰊖  Vim Be Good", ":VimBeGood<CR>"),
+    dashboard.button( "q", "󰗼  Quit NVIM"  , ":qa<CR>"),
 }
 
 -- Set footer
