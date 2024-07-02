@@ -96,6 +96,9 @@ export NVM_DIR="$HOME/.nvm"
 
 
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/sapmachine-17.jdk/Contents/Home
+if [[ -s $HOME/.rvm/scripts/rvm ]]; then
+  source $HOME/.rvm/scripts/rvm;
+fi
 # source $ZSH/oh-my-zsh.sh
 # source /etc/profile.d/maven.sh
 
@@ -197,3 +200,6 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
