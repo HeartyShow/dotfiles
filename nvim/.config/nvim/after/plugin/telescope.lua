@@ -2,23 +2,10 @@ local builtin = require('telescope.builtin')
 
 -- Base keymaps
 
+vim.keymap.set('n', '<c-p>', builtin.find_files, { desc = 'Find file in current project' })
 vim.keymap.set('n', '<leader>?', builtin.oldfiles, { desc = 'Find recently opened files', silent = true })
 vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find, { desc = 'Find in current file', silent = true })
-vim.keymap.set('n', '<leader>fs', builtin.find_files, { desc = 'Find file in current project', silent = true })
 vim.keymap.set('n', '<leader>he', builtin.help_tags, { desc = 'Search help tags', silent = true })
-
--- Custom keymap
-
-local project_files = function()
-    local _, ret, _ = require('telescope.utils').get_os_command_output({ 'git', 'rev-parse', '--is-inside-work-tree' })
-    if ret == 0 then
-        builtin.git_files()
-    else
-        builtin.find_files()
-    end
-end
-
-vim.keymap.set('n', '<c-p>', project_files, { desc = 'Find file in current project' })
 
 -- Config
 
