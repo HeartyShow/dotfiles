@@ -64,15 +64,15 @@ bufferline.setup({
 })
 
 local map = vim.keymap.set
-map("n", "<C-,>", function()
+map("n", "<C-m>", function()
     bufferline.cycle(-1)
 end, { desc = "bufferline: Move prev" })
 
-map("n", "<C-;>", function()
+map("n", "<C-,>", function()
     bufferline.cycle(1)
 end, { desc = "bufferline: Move next" })
 
 map("n", "<C->>", "<Cmd>:BufferLineMoveNext<CR>")
 map("n", "<C-<>", "<Cmd>:BufferLineMovePrev<CR>")
-map("n", "<C-:>", "<Cmd>:BufferLineTogglePin<CR>")
-map("n", "<C-=>", "<Cmd>:Bdelete<CR>")
+map("n", "<C-.>", "<Cmd>:BufferLineTogglePin<CR>")
+map("n", "<C-/>", "<Cmd>:Bdelete<CR>")
