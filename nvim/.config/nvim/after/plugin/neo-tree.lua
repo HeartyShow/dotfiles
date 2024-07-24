@@ -260,6 +260,9 @@ require('neo-tree').setup({
     }
 })
 
+local events = require("neo-tree.events")
+events.fire_event(events.GIT_EVENT)
+
 vim.api.nvim_set_keymap('n', '<C-e>', ':Neotree reveal_force_cwd<CR>', { silent = true })
 vim.cmd([[
   autocmd FileType neo-tree lua vim.api.nvim_buf_set_keymap(0, 'n', '<C-e>', ':Neotree toggle<CR>', { silent = true })
