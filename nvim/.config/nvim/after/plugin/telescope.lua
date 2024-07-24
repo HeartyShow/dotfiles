@@ -60,7 +60,7 @@ require("telescope").setup({
             search_by = { "title", "path" },
             on_project_selected = function(prompt_bufnr)
                 require("telescope._extensions.project.actions").change_working_directory(prompt_bufnr, false)
-                project_files()
+                builtin.find_files()
             end
         }
     }
