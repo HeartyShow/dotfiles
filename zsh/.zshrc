@@ -162,6 +162,9 @@ alias nvimdir="cd $NVIM_DIR"
 alias nvimconfig="cd $NVIM_DIR"
 nvimconfsave(){echo "Saving..." && git -C $NVIM_DIR add -A && git -C $NVIM_DIR commit -qm "$1" && git -C $NVIM_DIR push -q}
 
+# Tmux
+alias tx=tmuxinator
+
 # CloudFoundry
 export EMAIL="alexandre.vialar@sap.com"
 export CFURL="https://api.cf.eu10-004.hana.ondemand.com"
@@ -199,7 +202,6 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
