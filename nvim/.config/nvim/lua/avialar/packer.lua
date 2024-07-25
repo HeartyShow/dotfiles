@@ -167,5 +167,4 @@ return require('packer').startup(function(use)
     use('ThePrimeagen/vim-be-good')
     use('nvim-lualine/lualine.nvim')
     use('m4xshen/smartcolumn.nvim')
-    use {'edluffy/hologram.nvim'}
 end)
