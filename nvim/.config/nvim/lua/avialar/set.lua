@@ -21,14 +21,13 @@ vim.opt.incsearch = true
 vim.opt.termguicolors = true
 
 
-vim.opt.scrolloff = 15
+vim.opt.scrolloff = 5
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 
 vim.opt.cursorline = true
--- vim.opt.colorcolumn = "120"
 vim.opt.fillchars = { eob = " "}
 
 vim.api.nvim_create_autocmd("VimEnter", { command = ":so $NVIM_DIR/lua/avialar/packer.lua" })
