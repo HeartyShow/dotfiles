@@ -34,9 +34,6 @@ vim.keymap.set("n", "<leader>fo", vim.lsp.buf.format)
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
-vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.dotfiles/nvim/.config/nvim/lua/avialar/packer.lua<CR>");
-vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
-
 vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
@@ -46,8 +43,3 @@ vim.keymap.set('v', '<S-Tab>', '<gv', {})
 
 vim.keymap.set("n", "<C-o>", "<C-o>zz")
 vim.keymap.set("n", "<Tab>", "<C-i>zz")
-
-vim.keymap.set("n", "é", "<Cmd>:AerialNext<CR>")
-vim.keymap.set("n", "&", "<Cmd>:AerialPrev<CR>")
-
-vim.keymap.set("n", "<leader>gi", "<Cmd>:LazyGit<CR>")
