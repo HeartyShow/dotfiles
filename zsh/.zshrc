@@ -18,13 +18,17 @@ zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
+zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
 
 # Load completions
 # autoload -Uz compinit && compinit
 
+# History management
 zinit cdreplay -q
 
-# HISTORY
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
+
 HISTSIZE=5000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
@@ -40,8 +44,9 @@ setopt hist_find_no_dups
 # Completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa --tree --icons --level=1 -a $realpath'
+zstyle ':fzf-tab:complete:z:*' fzf-preview 'exa --tree --icons --level=1 -a $realpath'
+
 
 # Base
 alias c="clear"
