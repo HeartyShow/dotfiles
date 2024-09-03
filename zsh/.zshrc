@@ -13,6 +13,9 @@ fi
 # Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
+autoload -Uz compinit
+compinit
+
 # Plugins installation
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
@@ -81,6 +84,21 @@ export EDITOR="nvim"
 alias nvimdir="cd $NVIM_DIR"
 alias nvimconfig="cd $NVIM_DIR"
 nvimconfsave(){echo "Saving..." && git -C $NVIM_DIR add -A && git -C $NVIM_DIR commit -qm "$1" && git -C $NVIM_DIR push -q}
+
+# Conda
+if command -v brew &> /dev/null; then
+    __conda_setup="$('/opt/homebrew/Caskroom/miniconda/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
+    else
+        if [ -f "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh" ]; then
+            . "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh"
+        else
+            export PATH="/opt/homebrew/Caskroom/miniconda/base/bin:$PATH"
+        fi
+    fi
+    unset __conda_setup
+fi
 
 # Tmux
 alias tx=tmuxinator
