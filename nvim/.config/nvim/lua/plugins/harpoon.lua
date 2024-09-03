@@ -27,10 +27,11 @@ return {
 
         vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end, { desc = "Add harpoon" })
         vim.keymap.set("n", "<leader>d", function() harpoon:list():remove() end, { desc = "Remove harpoon" })
-        vim.keymap.set("n", "<C-1>", function() harpoon:list():select(1) end, { noremap = true, silent = true })
-        vim.keymap.set("n", "<C-2>", function() harpoon:list():select(2) end, { noremap = true, silent = true })
-        vim.keymap.set("n", "<C-3>", function() harpoon:list():select(3) end, { noremap = true, silent = true })
-        vim.keymap.set("n", "<C-4>", function() harpoon:list():select(4) end, { noremap = true, silent = true })
+        vim.keymap.set("n", "<leader>1", function() harpoon:list():select(1) end, { noremap = true, silent = true })
+        vim.keymap.set("n", "<leader>2", function() harpoon:list():select(2) end, { noremap = true, silent = true })
+        vim.keymap.set("n", "<leader>3", function() harpoon:list():select(3) end, { noremap = true, silent = true })
+        vim.keymap.set("n", "<leader>4", function() harpoon:list():select(4) end, { noremap = true, silent = true })
+        vim.keymap.set("n", "<leader>4", function() harpoon:list():select(5) end, { noremap = true, silent = true })
 
         -- Toggle previous & next buffers stored within Harpoon list
         vim.keymap.set("n", "<C-m>", function() harpoon:list():prev() end)
