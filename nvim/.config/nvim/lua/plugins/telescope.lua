@@ -19,6 +19,10 @@ return {
                     i = {
                         ["<C-v>"] = actions.select_vertical,
                         ["<C-b>"] = actions.select_horizontal,
+                        ["<C-t>"] = require("trouble.sources.telescope").open,
+                    },
+                    n = {
+                        ["<C-t>"] = require("trouble.sources.telescope").add,
                     }
                 },
                 sorting_strategy = 'ascending',
@@ -122,27 +126,27 @@ return {
 
         -- Base keymaps
 
-        vim.keymap.set('n', '<c-p>', builtin.find_files, { desc = 'Find file in current project' })
-        vim.keymap.set('n', '<leader>b', buffer_searcher, { desc = 'Find opened buffers' })
+        vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find file in current project' })
+        vim.keymap.set('n', '<leader>fb', buffer_searcher, { desc = 'Find opened buffers' })
         vim.keymap.set('n', '<leader>?', builtin.oldfiles, { desc = 'Find recently opened files', silent = true })
         vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find,{ desc = 'Find in current file', silent = true })
-        vim.keymap.set('n', '<leader>he', builtin.help_tags, { desc = 'Search help tags', silent = true })
+        vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Search help tags', silent = true })
 
         -- Extensions keymap
 
         require("telescope").load_extension("file_browser")
-        vim.keymap.set("n", "<space>fb", ":Telescope file_browser<CR>",
+        vim.keymap.set("n", "<space>fl", ":Telescope file_browser<CR>",
             { desc = 'Find in current project', silent = true })
 
         require("telescope").load_extension("aerial")
-        vim.keymap.set('n', '<leader>o', ':Telescope aerial<CR>', { desc = 'Find in current project', silent = true })
+        vim.keymap.set('n', '<leader>fs', ':Telescope aerial<CR>', { desc = 'Find in current project', silent = true })
 
         require("telescope").load_extension("project")
-        vim.keymap.set("n", "<leader>pr", ":lua require'telescope'.extensions.project.project{display_type = 'full'}<CR>",
+        vim.keymap.set("n", "<leader>fp", ":lua require'telescope'.extensions.project.project{display_type = 'full'}<CR>",
             { desc = 'Find a project', silent = true })
 
         require("telescope").load_extension("live_grep_args")
-        vim.keymap.set("n", "<leader>lg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
+        vim.keymap.set("n", "<leader>fg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
             { desc = 'Find in current project', silent = true })
     end
 }
