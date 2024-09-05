@@ -128,9 +128,10 @@ return {
 
         vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find file in current project' })
         vim.keymap.set('n', '<leader>fb', buffer_searcher, { desc = 'Find opened buffers' })
-        vim.keymap.set('n', '<leader>?', builtin.oldfiles, { desc = 'Find recently opened files', silent = true })
-        vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find,{ desc = 'Find in current file', silent = true })
+        vim.keymap.set('n', '<leader>fo', builtin.oldfiles, { desc = 'Find recently opened files', silent = true })
         vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Search help tags', silent = true })
+        vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find,
+        { desc = 'Find in current file', silent = true })
 
         -- Extensions keymap
 
