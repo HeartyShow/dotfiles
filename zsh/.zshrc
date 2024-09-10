@@ -29,8 +29,8 @@ zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
 # History management
 zinit cdreplay -q
 
-bindkey '^p' history-search-backward
-bindkey '^n' history-search-forward
+bindkey '^k' history-search-backward
+bindkey '^j' history-search-forward
 
 HISTSIZE=5000
 HISTFILE=~/.zsh_history
@@ -110,3 +110,20 @@ alias zscore="zoxide query --list --score"
 
 # Oh my posh
 eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/zen.toml)"
+
+# Tmux Sesh extension
+function sesh-sessions() {
+  {
+    exec </dev/tty
+    exec <&1
+    local session
+    session=$(sesh list -t -c | fzf --height 40% --reverse --border-label ' sesh ' --border --prompt '⚡  ')
+    [[ -z "$session" ]] && return
+    sesh connect $session
+  }
+}
+
+zle     -N             sesh-sessions
+bindkey -M emacs '\es' sesh-sessions
+bindkey -M vicmd '\es' sesh-sessions
+bindkey -M viins '\es' sesh-sessions
