@@ -20,6 +20,8 @@ return {
                         ["<C-v>"] = actions.select_vertical,
                         ["<C-b>"] = actions.select_horizontal,
                         ["<C-t>"] = require("trouble.sources.telescope").open,
+                        ["<C-j>"] = actions.move_selection_next,
+                        ["<C-k>"] = actions.move_selection_previous,
                     },
                     n = {
                         ["<C-t>"] = require("trouble.sources.telescope").add,
