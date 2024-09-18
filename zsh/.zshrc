@@ -50,13 +50,11 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa --tree --icons --level=1 -a $realpath'
 zstyle ':fzf-tab:complete:z:*' fzf-preview 'exa --tree --icons --level=1 -a $realpath'
 
-
 # Base
 alias c="clear"
 alias ls="exa --tree --icons --level=1 -a"
 alias lt="exa --tree --icons --level=2 -a"
 alias grep="grep --color=auto"
-alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 
 # Android
 alias android="scrcpy --video-bit-rate=50M"
@@ -127,3 +125,9 @@ zle     -N             sesh-sessions
 bindkey -M emacs '\es' sesh-sessions
 bindkey -M vicmd '\es' sesh-sessions
 bindkey -M viins '\es' sesh-sessions
+
+# Nixos
+if [ -d /etc/NIXOS ] || command -v nixos-version >/dev/null 2>&1; then
+  # Add an alias to rebuild the NixOS configuration
+  alias rebuild='sudo nixos-rebuild switch --flake /etc/nixos#default'
+fi
