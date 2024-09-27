@@ -47,13 +47,13 @@ setopt hist_find_no_dups
 # Completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa --tree --icons --level=1 -a $realpath'
-zstyle ':fzf-tab:complete:z:*' fzf-preview 'exa --tree --icons --level=1 -a $realpath'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --tree --icons --level=1 -a $realpath'
+zstyle ':fzf-tab:complete:z:*' fzf-preview 'eza --tree --icons --level=1 -a $realpath'
 
 # Base
 alias c="clear"
-alias ls="exa --tree --icons --level=1 -a"
-alias lt="exa --tree --icons --level=2 -a"
+alias ls="eza --tree --icons --level=1 -a"
+alias lt="eza --tree --icons --level=2 -a"
 alias grep="grep --color=auto"
 
 # Android
