@@ -55,10 +55,10 @@ return {
             nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
             nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
             nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-            nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
             -- See `:help K` for why this keymap
             nmap('<C-u>', vim.lsp.buf.hover, 'Hover Documentation')
+            nmap('<C-x>', vim.diagnostic.open_float, 'Hover Diagnostics')
 
             -- Lesser used LSP functionality
             nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -101,9 +101,17 @@ return {
             }
         end
 
+        -- Mason
         require('mason').setup()
         require('mason-lspconfig').setup({
-            ensure_installed = { 'jdtls' },
+            ensure_installed = {
+                'jdtls',         --Java
+                'lua_ls',        --Lua
+                'pyright',       --Python
+                'rust_analyzer', --Rust
+                'ruff',          --Python
+                'spectral'       --JSON, YAML
+            },
             handlers = {
                 function(server_name)
                     require('lspconfig')[server_name].setup {}
@@ -114,6 +122,30 @@ return {
                 end,
                 jdtls = lsp.noop,
             }
+        })
+
+        -- Python
+        require('lspconfig').ruff.setup({
+            init_options = {
+                settings = {
+                    -- Ruff language server settings go here
+                }
+            }
+        })
+
+        vim.api.nvim_create_autocmd("LspAttach", {
+            group = vim.api.nvim_create_augroup('lsp_attach_disable_ruff_hover', { clear = true }),
+            callback = function(args)
+                local client = vim.lsp.get_client_by_id(args.data.client_id)
+                if client == nil then
+                    return
+                end
+                if client.name == 'ruff' then
+                    -- Disable hover in favor of Pyright
+                    client.server_capabilities.hoverProvider = false
+                end
+            end,
+            desc = 'LSP: Disable hover capability from Ruff',
         })
     end
 }
