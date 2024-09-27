@@ -31,7 +31,7 @@ return {
         vim.keymap.set("n", "<leader>2", function() harpoon:list():select(2) end, { noremap = true, silent = true })
         vim.keymap.set("n", "<leader>3", function() harpoon:list():select(3) end, { noremap = true, silent = true })
         vim.keymap.set("n", "<leader>4", function() harpoon:list():select(4) end, { noremap = true, silent = true })
-        vim.keymap.set("n", "<leader>4", function() harpoon:list():select(5) end, { noremap = true, silent = true })
+        vim.keymap.set("n", "<leader>5", function() harpoon:list():select(5) end, { noremap = true, silent = true })
 
         -- Toggle previous & next buffers stored within Harpoon list
         vim.keymap.set("n", "<C-m>", function() harpoon:list():prev() end)
