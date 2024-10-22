@@ -12,7 +12,6 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
   [[blocks.segments]]
     type = 'path'
     style = 'diamond'
-    leading_diamond = ''
     trailing_diamond = ''
     template = '  {{ path .Path .Location }} '
     background = 'blue'
