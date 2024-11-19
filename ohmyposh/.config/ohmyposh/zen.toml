@@ -102,9 +102,19 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
   [[blocks.segments]]
     type = 'python'
     style = 'plain'
-    template = "  {{ .Full }} "
+    template = "  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
     background = 'transparent'
     foreground = 'yellow'
+    Text = ''
+    Duration = 0
+    NameLength = 0
+
+  [[blocks.segments]]
+    type = 'python'
+    style = 'plain'
+    template = " ({{ if .Venv }}{{ .Venv }}{{ end }}) "
+    background = 'transparent'
+    foreground = 'green'
     Text = ''
     Duration = 0
     NameLength = 0
