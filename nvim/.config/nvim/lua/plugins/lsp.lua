@@ -5,6 +5,7 @@ return {
         -- LSP Support
         { "neovim/nvim-lspconfig" },
         { "williamboman/mason.nvim" },
+        { "WhoIsSethDaniel/mason-tool-installer.nvim" },
         { "williamboman/mason-lspconfig.nvim" },
 
         -- Autocompletion
@@ -102,16 +103,9 @@ return {
         end
 
         -- Mason
+        local mason_tool_installer = require("mason-tool-installer")
         require('mason').setup()
         require('mason-lspconfig').setup({
-            ensure_installed = {
-                'jdtls',         --Java
-                'lua_ls',        --Lua
-                'pyright',       --Python
-                'rust_analyzer', --Rust
-                'ruff',          --Python
-                'spectral'       --JSON, YAML
-            },
             handlers = {
                 function(server_name)
                     require('lspconfig')[server_name].setup {}
@@ -124,14 +118,39 @@ return {
             }
         })
 
-        -- Python
-        require('lspconfig').ruff.setup({
-            init_options = {
-                settings = {
-                    -- Ruff language server settings go here
-                }
-            }
+        mason_tool_installer.setup({
+            ensure_installed = {
+                "prettier", -- prettier formatter
+                "stylua", -- lua formatter
+                "ruff", -- python formatter
+                "pyright", -- python STC
+                "eslint_d", -- js linter
+            },
         })
+
+        -- Python
+        -- require('lspconfig').ruff.setup({
+        --     init_options = {
+        --         settings = {
+        --             -- Ruff language server settings go here
+        --         }
+        --     }
+        -- })
+
+        require('lspconfig').pyright.setup {
+            settings = {
+                pyright = {
+                    -- Using Ruff's import organizer
+                    disableOrganizeImports = true,
+                },
+                python = {
+                    analysis = {
+                        -- Ignore all files for analysis to exclusively use Ruff for linting
+                        ignore = { '*' },
+                    },
+                },
+            },
+        }
 
         vim.api.nvim_create_autocmd("LspAttach", {
             group = vim.api.nvim_create_augroup('lsp_attach_disable_ruff_hover', { clear = true }),
