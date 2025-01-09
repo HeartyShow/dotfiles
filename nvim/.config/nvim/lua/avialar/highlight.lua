@@ -4,15 +4,15 @@ local cmd = vim.cmd
 local colors = require("catppuccin.palettes").get_palette()
 
 local bg = function(group, col)
-    cmd("hi " .. group .. " guibg=" .. col)
+	cmd("hi " .. group .. " guibg=" .. col)
 end
 
 local fg = function(group, col)
-    cmd("hi " .. group .. " guifg=" .. col)
+	cmd("hi " .. group .. " guifg=" .. col)
 end
 
 local fg_bg = function(group, fgcol, bgcol)
-    cmd("hi " .. group .. " guifg=" .. fgcol .. " guibg=" .. bgcol)
+	cmd("hi " .. group .. " guifg=" .. fgcol .. " guibg=" .. bgcol)
 end
 
 local clear = colors.surface0
@@ -44,3 +44,9 @@ fg_bg("NeoTreeWinSeparator", mid, mid)
 -- VirtColumn
 
 fg("VirtColumn", clear)
+
+-- Colors
+
+fg("DapBreakpoint", colors.red)
+fg("DapBreakpointRejected", colors.blue)
+fg("DapStopped", colors.yellow)

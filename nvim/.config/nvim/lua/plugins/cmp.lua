@@ -3,10 +3,6 @@ return {
 		"hrsh7th/nvim-cmp",
 		event = "InsertEnter",
 		dependencies = {
-			{
-				-- snippet plugin
-				"L3MON4D3/LuaSnip",
-			},
 			-- autopairing of (){}[] etc
 			{
 				"windwp/nvim-autopairs",
@@ -22,7 +18,6 @@ return {
 					require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
 				end,
 			},
-			"saadparwaiz1/cmp_luasnip",
 			"hrsh7th/cmp-nvim-lua",
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-buffer",

@@ -20,7 +20,6 @@ vim.opt.incsearch = true
 
 vim.opt.termguicolors = true
 
-
 vim.opt.scrolloff = 5
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
@@ -28,6 +27,7 @@ vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 
 vim.opt.cursorline = true
-vim.opt.fillchars = { eob = " "}
+vim.opt.fillchars = { eob = " " }
 
 vim.api.nvim_create_autocmd("TextYankPost", { command = ":lua vim.highlight.on_yank()" })
+vim.opt.infercase = true
