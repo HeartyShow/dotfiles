@@ -53,11 +53,12 @@ return {
 					"--line-number",
 					"--column",
 					"--smart-case",
+					"--hidden",
 					"-u",
 				},
 				file_ignore_patterns = {
 					"node_modules",
-					".git",
+					".git/",
 				},
 			},
 			pickers = {
@@ -69,8 +70,6 @@ return {
 						"--color=never",
 						"--hidden",
 						"--follow",
-						"-E",
-						".git/*",
 					},
 				},
 			},
