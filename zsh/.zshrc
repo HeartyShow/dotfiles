@@ -132,6 +132,11 @@ export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
+# Nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" # This loads nvm
+[ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" 
+
 
 # Created by `pipx` on 2024-11-14 09:21:31
 export PATH="$PATH:/Users/I584830/.local/bin"
@@ -142,3 +147,4 @@ export GPG_TTY=$(tty)
 alias buildx="docker-buildx"
 
 eval "$(pyenv virtualenv-init -)"
+
