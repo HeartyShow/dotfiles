@@ -6,6 +6,7 @@ return {
 		"nvim-telescope/telescope-project.nvim",
 		"nvim-telescope/telescope-live-grep-args.nvim",
 		"nvim-telescope/telescope-file-browser.nvim",
+		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 	},
 	opts = function()
 		local builtin = require("telescope.builtin")
@@ -81,6 +82,13 @@ return {
 						require("telescope._extensions.project.actions").change_working_directory(prompt_bufnr, false)
 						builtin.find_files()
 					end,
+				},
+				fzf = {
+					fuzzy = true, -- false will only do exact matching
+					override_generic_sorter = true, -- override the generic sorter
+					override_file_sorter = true, -- override the file sorter
+					case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+					-- the default case_mode is "smart_case"
 				},
 			},
 		}
@@ -165,6 +173,14 @@ return {
 			"<leader>fg",
 			":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
 			{ desc = "Find in current project", silent = true }
+		)
+
+		require("telescope").load_extension("fzf")
+		vim.keymap.set(
+			"n",
+			"<leader>fi",
+			":Telescope current_buffer_fuzzy_find<CR>",
+			{ desc = "Find in current buffer", silent = true }
 		)
 	end,
 }
