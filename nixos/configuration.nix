@@ -5,14 +5,14 @@
 # NixOS-WSL specific options are documented on the NixOS-WSL repository:
 # https://github.com/nix-community/NixOS-WSL
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, username,... }:
 
 {
   imports = [
   ];
 
   wsl.enable = true;
-  wsl.defaultUser = "hearty";
+  wsl.defaultUser = username;
 
   # Enable nix flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -26,4 +26,7 @@
 
   # Set the default editor to vim
   environment.variables.EDITOR = "vim";
+
+  programs.zsh.enable = true;
+  users.users.${username}.shell = pkgs.zsh;
 }

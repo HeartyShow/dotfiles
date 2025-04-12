@@ -124,7 +124,7 @@ bindkey -M viins '\es' sesh-sessions
 # Nixos
 if [ -d /etc/NIXOS ] || command -v nixos-version >/dev/null 2>&1; then
   # Add an alias to rebuild the NixOS configuration
-  alias rebuild='sudo nixos-rebuild switch --flake /etc/nixos#default'
+  alias rebuild='sudo nixos-rebuild switch --flake path:$HOME/.dotfiles/nixos --impure'
 fi
 
 # PyEnv auto-completion

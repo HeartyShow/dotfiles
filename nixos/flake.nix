@@ -22,7 +22,8 @@
         specialArgs = {inherit username;};
       in
 	nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+          system = "x86_64-linux";
+          specialArgs = specialArgs;
           modules = [
             # Import the previous configuration.nix we used,
             # so the old configuration file still takes effect
@@ -42,7 +43,6 @@
     
               home-manager.extraSpecialArgs = inputs // specialArgs;
               home-manager.users.${username} = import ./users/${username}/home.nix;
-              # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
             }
           ];
         };

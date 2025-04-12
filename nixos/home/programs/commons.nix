@@ -18,23 +18,11 @@
     zip
     unzip
 
+    # Docker
     docker
-
-    nodejs
-    python3
-    lua
-
-    # Nvim
-    luajitPackages.luarocks
   ];
 
   programs.neovim = {
     enable = true;
-    extraPackages = with pkgs; [
-      # Language server packages (executables)
-      sumneko-lua-language-server
-      rust-analyzer
-      pyright
-    ];
   };
 }
