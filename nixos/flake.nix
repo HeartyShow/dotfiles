@@ -4,7 +4,7 @@
   inputs = {
     # NixOS official package source, using the nixos-24.11 branch here
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
-    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
+    # nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       # The `follows` keyword in inputs is used for inheritance.
@@ -15,7 +15,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-wsl, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
     nixosConfigurations = {
       nixos = let
         username = "hearty";
@@ -28,12 +28,13 @@
             # Import the previous configuration.nix we used,
             # so the old configuration file still takes effect
             ./configuration.nix
-	    # Import the WSL module for WSL support
-	    nixos-wsl.nixosModules.default
-            {
-              system.stateVersion = "24.11";
-              wsl.enable = true;
-            }
+	  
+            # Import the WSL module for WSL support
+	    # nixos-wsl.nixosModules.default
+            # {
+            #   system.stateVersion = "24.11";
+            #   wsl.enable = true;
+            # }
     
 	    # Home manager config
 	    home-manager.nixosModules.home-manager
