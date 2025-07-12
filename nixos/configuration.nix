@@ -8,6 +8,8 @@
 { config, lib, pkgs, username,... }:
 
 {
+  nixpkgs.config.allowUnfree = true;
+
   imports = [
     /etc/nixos/hardware-configuration.nix
   ];
@@ -28,6 +30,7 @@
     git
     vim
     wget
+    docker
   ];
 
   # Set the default editor to vim
@@ -45,4 +48,32 @@
   security.sudo.wheelNeedsPassword = false;
 
   services.openssh.enable = true;
+  virtualisation.docker.enable = true;
+
+  # Setup for hardware acceleration
+  hardware = {
+    enableRedistributableFirmware = true;
+    enableAllFirmware = true;
+    opengl.enable = true;
+
+    graphics = {
+      enable = true;
+      extraPackages = with pkgs; [
+        libva
+        libva-utils
+        intel-media-driver       # VA-API iHD driver
+        intel-vaapi-driver       # Optional legacy driver
+        intel-compute-runtime    # Optional for tone mapping / OpenCL
+        onevpl-intel-gpu         # Optional VPL runtime
+        intel-gpu-tools          # For intel_gpu_top
+      ];
+    };
+  };
+
+  boot.kernelModules = [ "i915" ];
+  boot.kernelParams = [
+    "i915.enable_guc=3"
+    "i915.fastboot=1"
+    "i915.force_probe=46d4"   # Only necessary if your GPU is not auto-enabled
+  ];
 }

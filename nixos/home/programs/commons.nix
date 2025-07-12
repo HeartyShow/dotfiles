@@ -20,6 +20,7 @@
 
     # Docker
     docker
+    lazydocker
   ];
 
   programs.neovim = {
