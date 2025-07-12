@@ -56,6 +56,10 @@
     enableAllFirmware = true;
     opengl.enable = true;
 
+    firmware = with pkgs; [
+      linux-firmware
+    ];
+
     graphics = {
       enable = true;
       extraPackages = with pkgs; [
@@ -76,4 +80,19 @@
     "i915.fastboot=1"
     "i915.force_probe=46d4"   # Only necessary if your GPU is not auto-enabled
   ];
+
+  networking.useDHCP = false;
+
+  networking.interfaces.enp1s0 = {
+    useDHCP = false;
+    ipv4.addresses = [{
+      address = "192.168.1.26";
+      prefixLength = 24;
+    }];
+  };
+
+  networking.defaultGateway = "192.168.1.1";
+
+  networking.nameservers = ["1.1.1.1" "8.8.8.8"];
 }
+
