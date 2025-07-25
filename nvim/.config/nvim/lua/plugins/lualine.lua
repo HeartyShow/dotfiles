@@ -3,6 +3,7 @@ return {
 	dependencies = {
 		"nvim-tree/nvim-web-devicons",
 		"AndreM222/copilot-lualine",
+		"letieu/harpoon-lualine",
 	},
 	opts = {
 		options = {
@@ -23,7 +24,10 @@ return {
 					symbols = { error = " ", warn = " ", info = " ", hint = " " },
 				},
 			},
-			lualine_c = { "filename" },
+			lualine_c = { 
+				"filename",
+				"harpoon2"
+			},
 			lualine_x = {
 				{
 					"copilot",
@@ -42,6 +46,10 @@ return {
 				"encoding",
 				"fileformat",
 				"filetype",
+				{
+					"lsp_status",
+					ignore_lsp = { "null-ls", "copilot" },
+				}
 			}, -- I added copilot here
 			lualine_y = { "progress" },
 			lualine_z = { "location" },

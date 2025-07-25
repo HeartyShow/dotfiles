@@ -4,9 +4,17 @@ return {
 	dependencies = {
 		-- LSP Support
 		{ "neovim/nvim-lspconfig" },
-		{ "williamboman/mason.nvim" },
-		{ "WhoIsSethDaniel/mason-tool-installer.nvim" },
-		{ "williamboman/mason-lspconfig.nvim" },
+		-- { "williamboman/mason.nvim" },
+		-- { "WhoIsSethDaniel/mason-tool-installer.nvim" },
+		-- { "williamboman/mason-lspconfig.nvim" },
+		{
+			"WieeRd/auto-lsp.nvim",
+			dependencies = { "neovim/nvim-lspconfig" },
+			event = "VeryLazy",
+			opts = {
+				["pylsp"] = false,
+			},
+		},
 
 		-- Autocompletion
 		{ "hrsh7th/nvim-cmp" },
@@ -103,30 +111,30 @@ return {
 		end
 
 		-- Mason
-		local mason_tool_installer = require("mason-tool-installer")
-		require("mason").setup()
-		require("mason-lspconfig").setup({
-			handlers = {
-				function(server_name)
-					require("lspconfig")[server_name].setup({})
-				end,
-				lua_ls = function()
-					local lua_opts = lsp.nvim_lua_ls()
-					require("lspconfig").lua_ls.setup(lua_opts)
-				end,
-				jdtls = lsp.noop,
-			},
-		})
+		-- local mason_tool_installer = require("mason-tool-installer")
+		-- require("mason").setup()
+		-- require("mason-lspconfig").setup({
+		-- 	handlers = {
+		-- 		function(server_name)
+		-- 			require("lspconfig")[server_name].setup({})
+		-- 		end,
+		-- 		lua_ls = function()
+		-- 			local lua_opts = lsp.nvim_lua_ls()
+		-- 			require("lspconfig").lua_ls.setup(lua_opts)
+		-- 		end,
+		-- 		jdtls = lsp.noop,
+		-- 	},
+		-- })
 
-		mason_tool_installer.setup({
-			ensure_installed = {
-				"prettier", -- prettier formatter
-				"stylua", -- lua formatter
-				"ruff", -- python formatter
-				"pyright", -- python STC
-				"eslint_d", -- js linter
-			},
-		})
+		-- mason_tool_installer.setup({
+		-- 	ensure_installed = {
+		-- 		"prettier", -- prettier formatter
+		-- 		"stylua", -- lua formatter
+		-- 		"ruff", -- python formatter
+		-- 		"pyright", -- python STC
+		-- 		"eslint_d", -- js linter
+		-- 	},
+		-- })
 
 		-- Python
 		-- require('lspconfig').ruff.setup({
