@@ -1,7 +1,7 @@
 # /Users/I584830/.config/tmuxinator/dev.yml
 
 name: <%= @args[0] %>
-root: ~/Documents/dev/<%= @args[0] %>
+root: <%= @settings["path"] %>
 
 # Optional tmux socket
 # socket_name: foo
@@ -12,19 +12,19 @@ root: ~/Documents/dev/<%= @args[0] %>
 # Project hooks
 
 # Runs on project start, always
-# on_project_start: command
+# on_project_start: tmux resize-pane -Z -t nvim.1
 
 # Run on project start, the first time
-# on_project_first_start: command
+# on_project_first_start: tmux resize-pane -Z -t nvim.1
 
 # Run on project start, after the first time
-# on_project_restart: command
+# on_project_restart: tmux resize-pane -Z -t nvim.1
 
 # Run on project exit ( detaching from tmux session )
-# on_project_exit: command
+# on_project_exit: tmux resize-pane -Z -t nvim.1
 
 # Run on project stop
-# on_project_stop: command
+on_project_stop: tmux resize-pane -Z -t nvim.1
 
 # Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
 # pre_window: rbenv shell 2.0.0-p247
@@ -36,7 +36,7 @@ root: ~/Documents/dev/<%= @args[0] %>
 # tmux_command: byobu
 
 # Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
-# startup_window: editor
+# startup_window: nvim
 
 # Specifies (by index) which pane of the specified window will be selected on project startup. If not set, the first pane is used.
 # startup_pane: 1
@@ -48,8 +48,13 @@ windows:
   - nvim:
       layout: bc52,163x44,0,0[163x32,0,0,1,163x11,0,33,3]
       panes:
-        - nvim .
-        - 
+        - nvim --cmd 'autocmd UIEnter * ++once silent! enew | silent! Telescope find_files'
+        -
+      # run: # ← only runs once, after both panes are created
+      #   # focus pane 1
+      #   - tmux select-pane -t nvim.1
+      #   # zoom it to full height
+      #   - tmux resize-pane -Z -t nvim.1
   - zsh:
       panes:
-        - 
+        -
