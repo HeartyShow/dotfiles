@@ -1,0 +1,8 @@
+git:
+  overrideGpg: true
+customCommands:
+  - key: "<c-p>"
+    command: "git fetch --prune"
+    context: "localBranches"
+    description: "Prune local branches"
+    output: log
