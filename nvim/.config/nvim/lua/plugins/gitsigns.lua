@@ -42,6 +42,7 @@ return {
 			enable = false,
 		},
 	},
+	event = "BufEnter",
 	keys = {
 		{
 			"<C-b>",
