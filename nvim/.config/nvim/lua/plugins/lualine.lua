@@ -24,9 +24,9 @@ return {
 					symbols = { error = " ", warn = " ", info = " ", hint = " " },
 				},
 			},
-			lualine_c = { 
+			lualine_c = {
 				"filename",
-				"harpoon2"
+				{ "harpoon2", icon = "󰀱" },
 			},
 			lualine_x = {
 				{
@@ -49,7 +49,7 @@ return {
 				{
 					"lsp_status",
 					ignore_lsp = { "null-ls", "copilot" },
-				}
+				},
 			}, -- I added copilot here
 			lualine_y = { "progress" },
 			lualine_z = { "location" },
