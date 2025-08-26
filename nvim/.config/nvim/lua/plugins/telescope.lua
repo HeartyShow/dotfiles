@@ -1,3 +1,4 @@
+-- Telescope is a highly extendable fuzzy finder plugin with support for various pickers and extensions.
 return {
 	"nvim-telescope/telescope.nvim",
 	tag = "0.1.8",

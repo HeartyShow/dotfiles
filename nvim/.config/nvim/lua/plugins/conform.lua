@@ -1,3 +1,4 @@
+-- Conform is a general-purpose code formatter for Neovim.
 return {
 	"stevearc/conform.nvim",
 	event = { "BufReadPre", "BufNewFile" },

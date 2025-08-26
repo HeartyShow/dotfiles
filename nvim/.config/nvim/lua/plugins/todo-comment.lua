@@ -1,3 +1,4 @@
+-- Todo-comment is a plugin that helps you to manage and highlight TODO comments in your code.
 return {
 	"folke/todo-comments.nvim",
 	dependencies = { "nvim-lua/plenary.nvim" },

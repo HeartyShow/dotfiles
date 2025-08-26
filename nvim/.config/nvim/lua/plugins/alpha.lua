@@ -1,3 +1,4 @@
+-- Alpha is a greeter/dashboard for Neovim
 return {
 	"goolord/alpha-nvim",
 	enabled = false,

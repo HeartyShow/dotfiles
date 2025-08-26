@@ -1,3 +1,4 @@
+-- Lsp Config covers all LSP related shaenigans
 return {
 	"VonHeikemen/lsp-zero.nvim",
 	branch = "v3.x",

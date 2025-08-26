@@ -1,3 +1,4 @@
+-- CMP is a completion engine for neovim written in Lua.
 return {
 	{
 		"hrsh7th/nvim-cmp",

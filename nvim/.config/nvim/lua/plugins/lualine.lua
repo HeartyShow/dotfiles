@@ -1,3 +1,4 @@
+-- Lualine is a customizable statusline plugin for Neovim written in Lua.
 return {
 	"nvim-lualine/lualine.nvim",
 	dependencies = {

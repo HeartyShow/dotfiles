@@ -1,3 +1,4 @@
+-- Nvim-Dap-UI is a UI for nvim-dap, a Debug Adapter Protocol client for Neovim.
 return {
 	"rcarriga/nvim-dap-ui",
 	dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },

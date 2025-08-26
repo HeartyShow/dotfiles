@@ -1,3 +1,4 @@
+-- Neo-Tree is a file explorer plugin for Neovim written in Lua.
 return {
 	"nvim-neo-tree/neo-tree.nvim",
 	branch = "v3.x",
