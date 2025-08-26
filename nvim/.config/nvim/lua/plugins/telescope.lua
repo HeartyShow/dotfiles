@@ -3,7 +3,6 @@ return {
 	tag = "0.1.8",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
-		"nvim-telescope/telescope-project.nvim",
 		"nvim-telescope/telescope-live-grep-args.nvim",
 		"nvim-telescope/telescope-file-browser.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -76,14 +75,6 @@ return {
 				},
 			},
 			extensions = {
-				project = {
-					order_by = "recent",
-					search_by = { "title", "path" },
-					on_project_selected = function(prompt_bufnr)
-						require("telescope._extensions.project.actions").change_working_directory(prompt_bufnr, false)
-						builtin.find_files()
-					end,
-				},
 				fzf = {
 					fuzzy = true, -- false will only do exact matching
 					override_generic_sorter = true, -- override the generic sorter
@@ -159,14 +150,6 @@ return {
 
 		require("telescope").load_extension("aerial")
 		vim.keymap.set("n", "<leader>fs", ":Telescope aerial<CR>", { desc = "Find in current project", silent = true })
-
-		require("telescope").load_extension("project")
-		vim.keymap.set(
-			"n",
-			"<leader>fp",
-			":lua require'telescope'.extensions.project.project{display_type = 'full'}<CR>",
-			{ desc = "Find a project", silent = true }
-		)
 
 		require("telescope").load_extension("live_grep_args")
 		vim.keymap.set(
