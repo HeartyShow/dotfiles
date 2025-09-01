@@ -24,7 +24,7 @@ root: <%= @settings["path"] %>
 # on_project_exit: tmux resize-pane -Z -t nvim.1
 
 # Run on project stop
-on_project_stop: tmux resize-pane -Z -t nvim.1
+# on_project_stop: tmux resize-pane -Z -t nvim.1
 
 # Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
 # pre_window: rbenv shell 2.0.0-p247
@@ -48,7 +48,7 @@ windows:
   - nvim:
       layout: bc52,163x44,0,0[163x32,0,0,1,163x11,0,33,3]
       panes:
-        - nvim --cmd 'autocmd UIEnter * ++once silent! enew | silent! Telescope find_files'
+        - tmux resize-pane -Z -t nvim.1 && nvim
         -
       # run: # ← only runs once, after both panes are created
       #   # focus pane 1
