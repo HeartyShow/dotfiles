@@ -136,7 +136,7 @@ return {
 			"n",
 			"<leader>/",
 			builtin.current_buffer_fuzzy_find,
-			{ desc = "Find in current file", silent = true }
+			{ desc = "Find in current buffer", silent = true }
 		)
 
 		-- Extensions keymap
@@ -160,12 +160,7 @@ return {
 			{ desc = "Find in current project", silent = true }
 		)
 
-		require("telescope").load_extension("fzf")
-		vim.keymap.set(
-			"n",
-			"<leader>fi",
-			":Telescope current_buffer_fuzzy_find<CR>",
-			{ desc = "Find in current buffer", silent = true }
-		)
+		require("telescope").load_extension("noice")
+		vim.keymap.set("n", "<leader>fn", ":Telescope noice <CR>", { desc = "Noice history", silent = true })
 	end,
 }

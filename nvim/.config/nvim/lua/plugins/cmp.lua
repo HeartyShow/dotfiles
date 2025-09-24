@@ -23,6 +23,7 @@ return {
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-cmdline",
 			"lukas-reineke/cmp-under-comparator",
 		},
 		opts = function()
@@ -58,7 +59,6 @@ return {
 			}
 
 			local cmp_mappings = lsp.defaults.cmp_mappings({
-				["<CR>"] = cmp.mapping.confirm({ select = true }),
 				["<C-Space>"] = cmp.mapping.complete(),
 				["<C-j>"] = cmp.mapping(function(fallback)
 					if cmp.visible() then
@@ -74,6 +74,8 @@ return {
 					end
 					fallback()
 				end, { "i" }),
+				["<CR>"] = cmp.mapping.confirm({ select = true }),
+				["<Tab>"] = cmp.mapping.confirm({ select = true }),
 			})
 
 			return {
@@ -112,7 +114,66 @@ return {
 			}
 		end,
 		config = function(_, opts)
-			require("cmp").setup(opts)
+			cmp = require("cmp")
+			cmp.setup(opts)
+			cmp.setup.cmdline("/", {
+				mapping = {
+					["<C-j>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							return cmp.select_next_item()
+						end
+						fallback()
+					end, { "c" }),
+					["<C-k>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							return cmp.select_prev_item()
+						end
+						fallback()
+					end, { "c" }),
+					["<CR>"] = cmp.mapping.confirm({ select = true }),
+					["<Tab>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							return cmp.confirm({ select = true })
+						end
+						fallback()
+					end, { "c" }),
+				},
+
+				sources = {
+					{ name = "buffer" },
+				},
+			})
+			cmp.setup.cmdline(":", {
+				mapping = {
+					["<C-j>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							return cmp.select_next_item()
+						end
+						fallback()
+					end, { "c" }),
+					["<C-k>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							return cmp.select_prev_item()
+						end
+						fallback()
+					end, { "c" }),
+					["<CR>"] = cmp.mapping.confirm({ select = true }),
+
+					["<Tab>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							return cmp.confirm({ select = true })
+						end
+						fallback()
+					end, { "c" }),
+				},
+
+				sources = cmp.config.sources({
+					{ name = "path" },
+				}, {
+					{ name = "cmdline" },
+				}),
+				matching = { disallow_symbol_nonprefix_matching = false },
+			})
 		end,
 	},
 }

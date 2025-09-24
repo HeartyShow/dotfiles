@@ -45,7 +45,7 @@ return {
 				nvimtree = false,
 				mason = true,
 				treesitter = true,
-				notify = false,
+				notify = true,
 				indent_blankline = {
 					enabled = true,
 					scope_color = colors.text, -- catppuccin color (eg. `lavender`) Default: text

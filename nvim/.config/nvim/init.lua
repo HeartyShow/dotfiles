@@ -37,13 +37,18 @@ require("lazy").setup({
 	checker = { enabled = true, notify = false },
 })
 
+vim.keymap.set("n", "<leader>l", ":Lazy<CR>", { desc = "Open Lazy" })
+
 vim.cmd.colorscheme("catppuccin")
 require("avialar.highlight")
 
 vim.api.nvim_create_autocmd("VimEnter", {
 	callback = function()
 		if vim.fn.argv(0) == "" then
-			require("telescope.builtin").find_files()
+			-- HACK: Workaround for erronous telescope notification
+			vim.defer_fn(function()
+				require("telescope.builtin").find_files()
+			end, 0)
 		end
 	end,
 })
