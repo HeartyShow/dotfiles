@@ -146,7 +146,7 @@ return {
 		--     }
 		-- })
 
-		vim.g.python3_host_prog = "/Users/I584830/.pyenv/versions/neovim/bin/python"
+		-- vim.g.python3_host_prog = "<home-path>.pyenv/versions/neovim/bin/python"
 
 		require("lspconfig").pyright.setup({
 			settings = {

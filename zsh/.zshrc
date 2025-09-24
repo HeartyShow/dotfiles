@@ -129,7 +129,7 @@ if [ -d /etc/NIXOS ] || command -v nixos-version >/dev/null 2>&1; then
   alias rebuild='sudo nixos-rebuild switch --flake path:$HOME/.dotfiles/nixos --impure'
 fi
 
-# PyEnv auto-completion
+# PyEnv
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
@@ -139,14 +139,10 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" # This loads nvm
 [ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" 
 
-
-# Created by `pipx` on 2024-11-14 09:21:31
-export PATH="$PATH:/Users/I584830/.local/bin"
+# Pipx
+export PATH="$PATH:$HOME/.local/bin"
 
 # GPG signatures
 export GPG_TTY=$(tty)
 
 alias buildx="docker-buildx"
-
-eval "$(pyenv virtualenv-init -)"
-
