@@ -3,6 +3,6 @@ font-thicken = true
 font-thicken-strength = 75
 font-size = 20
 
-theme = catppuccin-mocha
+theme = Catppuccin Mocha
 
 window-decoration = none
