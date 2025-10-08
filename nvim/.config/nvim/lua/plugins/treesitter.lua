@@ -1,6 +1,7 @@
 -- Treesitter is a parser generator tool and an incremental parsing library.
 return {
 	"nvim-treesitter/nvim-treesitter",
+	lazy = false,
 	build = function()
 		local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
 		ts_update()
