@@ -1,17 +1,47 @@
--- Nvim-Tmux-Navigation is a Neovim plugin that allows seamless navigation between Neovim splits and tmux panes using the same keybindings.
 return {
-	"alexghergh/nvim-tmux-navigation",
-	config = function()
-		require("nvim-tmux-navigation").setup({
-			disable_when_zoomed = true,
-		})
-
-		local nvim_tmux_nav = require("nvim-tmux-navigation")
-		vim.keymap.set("n", "<C-h>", nvim_tmux_nav.NvimTmuxNavigateLeft)
-		vim.keymap.set("n", "<C-j>", nvim_tmux_nav.NvimTmuxNavigateDown)
-		vim.keymap.set("n", "<C-k>", nvim_tmux_nav.NvimTmuxNavigateUp)
-		vim.keymap.set("n", "<C-l>", nvim_tmux_nav.NvimTmuxNavigateRight)
-		vim.keymap.set("n", "<C-\\>", nvim_tmux_nav.NvimTmuxNavigateLastActive)
-		vim.keymap.set("n", "<C-Space>", nvim_tmux_nav.NvimTmuxNavigateNext)
-	end,
+  "alexghergh/nvim-tmux-navigation",
+  keys = {
+    {
+      "<C-h>",
+      function()
+        require("nvim-tmux-navigation").NvimTmuxNavigateLeft()
+      end,
+      mode = "n",
+    },
+    {
+      "<C-j>",
+      function()
+        require("nvim-tmux-navigation").NvimTmuxNavigateDown()
+      end,
+      mode = "n",
+    },
+    {
+      "<C-k>",
+      function()
+        require("nvim-tmux-navigation").NvimTmuxNavigateUp()
+      end,
+      mode = "n",
+    },
+    {
+      "<C-l>",
+      function()
+        require("nvim-tmux-navigation").NvimTmuxNavigateRight()
+      end,
+      mode = "n",
+    },
+    {
+      "<C-\\>",
+      function()
+        require("nvim-tmux-navigation").NvimTmuxNavigateLastActive()
+      end,
+      mode = "n",
+    },
+    {
+      "<C-Space>",
+      function()
+        require("nvim-tmux-navigation").NvimTmuxNavigateNext()
+      end,
+      mode = "n",
+    },
+  },
 }
