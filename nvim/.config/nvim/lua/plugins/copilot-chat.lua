@@ -3,7 +3,7 @@ return {
   opts = function(_, opts)
     local user = vim.env.USER or "User"
     user = user:sub(1, 1):upper() .. user:sub(2)
-    opts.model = "gemini-2.5-pro"
+    opts.model = "claude-sonnet-4"
     opts.resources = { "buffer", "selection" }
     opts.window = {
       width = 0.35,
@@ -13,6 +13,5 @@ return {
       assistant = " Copilot ",
     }
     opts.show_help = false
-    opts.insert_at_end = true
   end,
 }
