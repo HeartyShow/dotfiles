@@ -17,13 +17,12 @@
     gnumake
     zip
     unzip
-
-    # Docker
-    docker
-    lazydocker
   ];
 
-  programs.neovim = {
-    enable = true;
-  };
+  # home.file.".dotfiles" = {
+  #     source = pkgs.runCommand "clone-dotfiles" {} ''
+  #     mkdir -p $out
+  #     git clone https://github.com/HeartyShow/dotfiles.git $out
+  # '';
+  # };
 }

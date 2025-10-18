@@ -1,47 +1,57 @@
 {
-  description = "NixOS Configuration";
+  description = "Hearty's NixOS Configurations";
 
   inputs = {
-    # NixOS official package source, using the nixos-24.11 branch here
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    
     home-manager = {
-      url = "github:nix-community/home-manager/master"; # or unstable release branch if available
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, nixos-wsl, ... }@inputs: 
+  let
+    username = "hearty";
+    system = "x86_64-linux";
+
+    specialArgs = { inherit inputs username; };
+
+    mkHomeManagerModule = homeFile: {
+      home-manager.useGlobalPkgs = true;
+      home-manager.useUserPackages = true;
+      home-manager.extraSpecialArgs = specialArgs;
+      home-manager.users.${username} = import homeFile;
+    };
+
+  in {
     nixosConfigurations = {
-      nixos = let
-        username = "hearty";
-        specialArgs = {inherit username;};
-      in
-	nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = specialArgs;
-          modules = [
-            # Import the previous configuration.nix we used,
-            # so the old configuration file still takes effect
-            ./configuration.nix
-	  
-            # Import the WSL module for WSL support
-	    # nixos-wsl.nixosModules.default
-            # {
-            #   system.stateVersion = "24.11";
-            #   wsl.enable = true;
-            # }
-    
-	    # Home manager config
-	    home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-    
-              home-manager.extraSpecialArgs = inputs // specialArgs;
-              home-manager.users.${username} = import ./users/${username}/home.nix;
-            }
-          ];
-        };
+      "media-server" = nixpkgs.lib.nixosSystem {
+        inherit system specialArgs;
+        modules = [
+          ./hosts/media-server/configuration.nix
+
+          home-manager.nixosModules.home-manager
+          (mkHomeManagerModule ./hosts/media-server/home.nix)
+        ];
+      };
+
+      "wsl" = nixpkgs.lib.nixosSystem {
+        inherit system specialArgs;
+        modules = [
+          nixos-wsl.nixosModules.wsl
+
+          ./hosts/wsl/configuration.nix
+
+          home-manager.nixosModules.home-manager
+          (mkHomeManagerModule ./hosts/wsl/home.nix)
+        ];
+      };
     };
   };
 }
