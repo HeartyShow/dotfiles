@@ -4,7 +4,7 @@
 
 vim.opt.clipboard = ""
 
-if vim.fn.has("wsl") then
+if vim.fn.has("wsl") == 1 and not vim.fn.has("mac") then
   vim.g.clipboard = {
     name = "win_clipboard",
     copy = {
