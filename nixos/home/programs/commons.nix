@@ -8,16 +8,17 @@
 
     # Utils
     bat
-    zoxide
+    dua
+    entr
     eza
-    fzf
-    ripgrep
     fd
+    fzf
     gcc
     gnumake
-    zip
+    ripgrep
     unzip
-    dua
+    zoxide
+    zip
   ];
 
   # home.file.".dotfiles" = {
