@@ -12,6 +12,14 @@ if [ ! -d "$ZINIT_HOME" ]; then
    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 
+TPM_DIR="${HOME}/.tmux/plugins/tpm"
+
+# Download TPM, if it's not there yet
+if [ ! -d "$TPM_DIR" ]; then
+   mkdir -p "$(dirname "$TPM_DIR")"
+   git clone https://github.com/tmux-plugins/tpm "$TPM_DIR"
+fi
+
 # Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
@@ -125,8 +133,14 @@ bindkey -M viins '\es' sesh-sessions
 
 # Nixos
 if [ -d /etc/NIXOS ] || command -v nixos-version >/dev/null 2>&1; then
-  # Add an alias to rebuild the NixOS configuration
-  alias rebuild='sudo nixos-rebuild switch --flake path:$HOME/.dotfiles/nixos --impure'
+  # Add a function to rebuild the NixOS configuration
+  rebuild() {
+    local flake_path="path:$HOME/.dotfiles/nixos"
+    if [ -n "$1" ]; then
+      flake_path="${flake_path}#$1"
+    fi
+    sudo nixos-rebuild switch --flake "$flake_path" --impure
+  }
 fi
 
 # PyEnv
