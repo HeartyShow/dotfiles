@@ -17,6 +17,7 @@
     gnumake
     zip
     unzip
+    dua
   ];
 
   # home.file.".dotfiles" = {
