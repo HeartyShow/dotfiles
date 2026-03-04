@@ -1,6 +1,7 @@
 return {
+  enabled = false,
   "mistricky/codesnap.nvim",
-  build = "make",
+  build = "make build_generator",
   opts = {
     has_breadcrumbs = true,
     bg_theme = "dusk",
