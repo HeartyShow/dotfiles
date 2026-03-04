@@ -2,7 +2,7 @@
   pkgs,
   ...
 }: {
-  home.packages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     python3
     uv
   ];

@@ -2,11 +2,7 @@
   pkgs,
   ...
 }: {
-  home.packages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     neovim
   ];
-
-  # programs.neovim = {
-  #   enable = true;
-  # };
 }

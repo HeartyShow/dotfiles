@@ -2,7 +2,7 @@
   pkgs,
   ...
 }: {
-  home.packages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     # Dotfiles
     stow
 
@@ -15,16 +15,10 @@
     fzf
     gcc
     gnumake
+    just
     ripgrep
     unzip
     zoxide
     zip
   ];
-
-  # home.file.".dotfiles" = {
-  #     source = pkgs.runCommand "clone-dotfiles" {} ''
-  #     mkdir -p $out
-  #     git clone https://github.com/HeartyShow/dotfiles.git $out
-  # '';
-  # };
 }

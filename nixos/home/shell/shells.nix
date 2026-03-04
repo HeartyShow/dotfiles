@@ -3,8 +3,9 @@
   username,
   ...
 }: {
-  home.packages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     zsh
+    sheldon
     oh-my-posh
 
     tmux

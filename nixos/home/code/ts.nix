@@ -2,9 +2,10 @@
   pkgs,
   ...
 }: {
-  home.packages = with pkgs; [
-    nodejs
-    eslint_d
-    prettierd
+  environment.systemPackages = with pkgs; [
+    bun
+    fnm
+    # eslint_d
+    # prettierd
   ];
 }

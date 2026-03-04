@@ -3,13 +3,9 @@
 
 export XDG_CONFIG_HOME="$HOME/.config"
 
-# Zinit package manager
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-
-# Download Zinit, if it's not there yet
-if [ ! -d "$ZINIT_HOME" ]; then
-   mkdir -p "$(dirname $ZINIT_HOME)"
-   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+# Sheldon zsh package manager
+if command -v sheldon >/dev/null 2>&1; then
+  eval "$(sheldon source)"
 fi
 
 TPM_DIR="${HOME}/.tmux/plugins/tpm"
@@ -20,26 +16,17 @@ if [ ! -d "$TPM_DIR" ]; then
    git clone https://github.com/tmux-plugins/tpm "$TPM_DIR"
 fi
 
-# Source/Load zinit
-source "${ZINIT_HOME}/zinit.zsh"
+TMUX_CATPPUCCIN_DIR="${HOME}/.tmux/plugins/catppuccin"
+
+# Download Tmux catppuccin, if it's not there yet
+if [ ! -d "$TMUX_CATPPUCCIN_DIR" ]; then
+   mkdir -p "$(dirname "$TMUX_CATPPUCCIN_DIR")"
+   git clone -b v2.1.3 https://github.com/catppuccin/tmux.git "$TMUX_CATPPUCCIN_DIR"
+fi
+
 
 autoload -Uz compinit
 compinit
-
-# Plugins installation
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
-zinit light Aloxaf/fzf-tab
-zinit ice depth=1;
-zinit light jeffreytse/zsh-vi-mode
-zinit light fourdim/zsh-poetry
-
-# Load completions
-# autoload -Uz compinit && compinit
-
-# History management
-zinit cdreplay -q
 
 bindkey '^k' history-search-backward
 bindkey '^j' history-search-forward
@@ -64,11 +51,16 @@ export FZF_DEFAULT_OPTS=" \
     --color=selected-bg:#45475a \
     --multi"
 
+preview_ls_cmd = 'eza --tree --icons --level=1 -a'
+
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --tree --icons --level=1 -a $realpath'
-zstyle ':fzf-tab:complete:z:*' fzf-preview 'eza --tree --icons --level=1 -a $realpath'
-zstyle ':fzf-tab:complete:nvim:*' fzf-preview 'bat --color=always --style=numbers $realpath 2>/dev/null || eza --tree --icons --level=1 --color=always $realpath'
+zstyle ':fzf-tab:complete:*' fzf-flags $(echo $FZF_DEFAULT_OPTS)
+zstyle ':fzf-tab:complete:ls:*' fzf-preview $preview_ls_cmd '$realpath'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview $preview_ls_cmd '$realpath'
+zstyle ':fzf-tab:complete:z:*' fzf-preview $preview_ls_cmd '$realpath'
+zstyle ':fzf-tab:complete:nvim:*' fzf-preview 'bat $realpath 2>/dev/null ||' $preview_ls_cmd '$realpath'
+zstyle ':fzf-tab:complete:vim:*' fzf-preview 'bat $realpath 2>/dev/null ||' $preview_ls_cmd '$realpath'
 
 # Base
 alias c="clear"
@@ -78,14 +70,6 @@ alias grep="grep --color=auto"
 
 # Zsh
 export ZSHRC="$HOME/.zshrc"
-alias zshedit="nvim $ZSHRC"
-alias zshsource="source $ZSHRC"
-zshsave(){echo "Saving ..." && git -C ~ add -u && git -C ~ commit -qm "$1" && git -C ~ push -q && zshsource}
-
-# Stow
-alias stowtest="docker run -ti \
--v ~/.dotfiles:/root/stow \
-registry.gitlab.com/waterkip/stowing:latest zsh"
 
 #Nvim
 export NVIM_DIR="$HOME/.config/nvim"
@@ -121,7 +105,6 @@ bindkey -M viins '\es' sesh-sessions
 
 # Nixos
 if [ -d /etc/NIXOS ] || command -v nixos-version >/dev/null 2>&1; then
-  # Add a function to rebuild the NixOS configuration
   rebuild() {
     local flake_path="path:$HOME/.dotfiles/nixos"
     if [ -n "$1" ]; then
@@ -131,13 +114,11 @@ if [ -d /etc/NIXOS ] || command -v nixos-version >/dev/null 2>&1; then
   }
 fi
 
-# Nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" # This loads nvm
-[ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" 
+# Fast Node Manager
+if command -v fnm >/dev/null 2>&1; then
+  eval "$(fnm env --use-on-cd --shell zsh)"
+fi
 
-# Pipx
-export PATH="$PATH:$HOME/.local/bin"
 
 #Java
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/sapmachine-25.jdk/Contents/Home"

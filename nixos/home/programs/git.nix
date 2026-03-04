@@ -2,14 +2,12 @@
   pkgs,
   ...
 }: {
-  home.packages = with pkgs; [
-    lazygit
+  environment.systemPackages = with pkgs; [
     delta
+    gh
+    git
+    git-credential-manager
+    gnupg
+    lazygit
   ];
-
-  programs.git = {
-    enable = true;
-    userName = "HeartyShow";
-    userEmail = "alex.vialar@gmail.com";
-  };
 }

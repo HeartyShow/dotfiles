@@ -1,0 +1,45 @@
+# Sheldon configuration for Zsh plugins
+# ~/.config/sheldon/plugins.toml
+
+shell = "zsh"
+
+# Apply source template to all plugins by default
+apply = ["source"]
+
+[plugins.zsh-syntax-highlighting]
+github = "zsh-users/zsh-syntax-highlighting"
+
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
+
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+
+[plugins.fzf-tab]
+github = "Aloxaf/fzf-tab"
+
+[plugins.zsh-vi-mode]
+github = "jeffreytse/zsh-vi-mode"
+
+# Defer plugin - example of custom template usage
+# [templates]
+# defer = """
+# {{ hooks?.pre | nl }}{% for file in files %}
+# zsh-defer source "{{ file }}"
+# {% endfor %}{{ hooks?.post | nl }}
+# """
+
+# Example: Plugin with custom use pattern
+# [plugins.example]
+# github = "owner/repo"
+# use = ["*.plugin.zsh"]
+
+# Example: Plugin with PATH template
+# [plugins.example-bin]
+# github = "owner/repo"
+# apply = ["PATH"]
+
+# Example: Profile-specific plugin
+# [plugins.work-only]
+# github = "owner/repo"
+# profiles = ["work"]

@@ -2,10 +2,10 @@
   pkgs,
   ...
 }: {
-  home.packages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     lua
     stylua
-    sumneko-lua-language-server
+    lua-language-server
     luajitPackages.luarocks
   ];
 }
