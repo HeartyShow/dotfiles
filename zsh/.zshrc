@@ -31,9 +31,9 @@ zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
-zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
+zinit ice depth=1;
+zinit light jeffreytse/zsh-vi-mode
 zinit light fourdim/zsh-poetry
-zinit wait lucid for MichaelAquilina/zsh-autoswitch-virtualenv
 
 # Load completions
 # autoload -Uz compinit && compinit
@@ -76,20 +76,11 @@ alias ls="eza --tree --icons --level=1 -a"
 alias lt="eza --tree --icons --level=2 -a"
 alias grep="grep --color=auto"
 
-# Android
-alias android="scrcpy --video-bit-rate=50M"
-
-# CD shortcuts
-alias dev="cd ~/documents/dev"
-
 # Zsh
 export ZSHRC="$HOME/.zshrc"
 alias zshedit="nvim $ZSHRC"
 alias zshsource="source $ZSHRC"
 zshsave(){echo "Saving ..." && git -C ~ add -u && git -C ~ commit -qm "$1" && git -C ~ push -q && zshsource}
-
-# Git
-alias gittree="git log --graph --oneline --decorate --all"
 
 # Stow
 alias stowtest="docker run -ti \
@@ -99,9 +90,6 @@ registry.gitlab.com/waterkip/stowing:latest zsh"
 #Nvim
 export NVIM_DIR="$HOME/.config/nvim"
 export EDITOR="nvim"
-alias nvimdir="cd $NVIM_DIR"
-alias nvimconfig="cd $NVIM_DIR"
-nvimconfsave(){echo "Saving..." && git -C $NVIM_DIR add -A && git -C $NVIM_DIR commit -qm "$1" && git -C $NVIM_DIR push -q}
 
 # Tmux
 alias tx=tmuxinator
@@ -143,11 +131,6 @@ if [ -d /etc/NIXOS ] || command -v nixos-version >/dev/null 2>&1; then
   }
 fi
 
-# PyEnv
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
 # Nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" # This loads nvm
@@ -155,6 +138,9 @@ export NVM_DIR="$HOME/.nvm"
 
 # Pipx
 export PATH="$PATH:$HOME/.local/bin"
+
+#Java
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/sapmachine-25.jdk/Contents/Home"
 
 # GPG signatures
 export GPG_TTY=$(tty)
