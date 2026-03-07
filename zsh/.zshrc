@@ -116,6 +116,11 @@ if command -v fnm >/dev/null 2>&1; then
   eval "$(fnm env --use-on-cd --shell zsh)"
 fi
 
+# Cargo/Rust
+if command -v cargo >/dev/null 2>&1; then
+  export CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
+  export PATH="$CARGO_HOME/bin:$PATH"
+fi
 
 #Java
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/sapmachine-25.jdk/Contents/Home"
