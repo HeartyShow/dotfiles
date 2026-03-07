@@ -7,7 +7,6 @@
     gh
     git
     git-credential-manager
-    gnupg
     lazygit
   ];
 }
