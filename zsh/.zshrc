@@ -28,9 +28,6 @@ fi
 autoload -Uz compinit
 compinit
 
-bindkey '^k' history-search-backward
-bindkey '^j' history-search-forward
-
 HISTSIZE=5000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
@@ -51,7 +48,7 @@ export FZF_DEFAULT_OPTS=" \
     --color=selected-bg:#45475a \
     --multi"
 
-preview_ls_cmd = 'eza --tree --icons --level=1 -a'
+preview_ls_cmd='eza --tree --icons --level=1 -a'
 
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
