@@ -7,7 +7,7 @@
   # Enable nix flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   environment.systemPackages = with pkgs; [
-    git vim wget pinentry_mac
+    git vim wget gnupg pinentry_mac
   ];
 
   # Set the default editor to vim

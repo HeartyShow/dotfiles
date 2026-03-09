@@ -40,7 +40,6 @@
       "keepingyouawake"
       "microsoft-auto-update"
       "microsoft-azure-storage-explorer"
-      "microsoft-edge"
       "microsoft-excel"
       "microsoft-onenote"
       "microsoft-outlook"
@@ -49,6 +48,7 @@
       "microsoft-word"
       "obsidian"
       "onedrive"
+      "sapmachine17-jdk"
       "sapmachine25-jdk"
       "raycast"
       {
