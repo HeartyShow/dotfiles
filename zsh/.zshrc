@@ -122,6 +122,12 @@ if command -v cargo >/dev/null 2>&1; then
   export PATH="$CARGO_HOME/bin:$PATH"
 fi
 
+# Go
+if command -v go >/dev/null 2>&1; then
+  export GOPATH="${GOPATH:-$HOME/go}"
+  export PATH="$GOPATH/bin:$PATH"
+fi
+
 #Java
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/sapmachine-25.jdk/Contents/Home"
 
