@@ -74,7 +74,10 @@
           ./hosts/work/homebrew.nix
           ./home/code
           ./home/code/java.nix
-          ./home/programs
+          ./home/programs/docker.nix
+          ./home/programs/commons.nix
+          ./home/programs/editors.nix
+          ./home/programs/git.nix
           ./home/shell/shells.nix
         ];
       };
