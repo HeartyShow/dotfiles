@@ -7,6 +7,9 @@ return {
     picker = {
       enabled = true,
       sources = {
+        files = { hidden = true },
+        grep = { hidden = true },
+        explorer = { hidden = true },
         gh_issue = {},
         gh_pr = {},
       },
