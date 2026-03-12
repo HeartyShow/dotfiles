@@ -11,6 +11,5 @@
     tmux
     tmuxinator
     sesh
-    gum
   ];
 }
