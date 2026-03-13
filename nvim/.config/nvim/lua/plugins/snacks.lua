@@ -7,11 +7,43 @@ return {
     picker = {
       enabled = true,
       sources = {
-        files = { hidden = true },
-        grep = { hidden = true },
+        files = {
+          hidden = true,
+          config = function(opts)
+            local root = Snacks.git.get_root()
+            if root then
+              opts.cwd = root
+            end
+            return opts
+          end,
+        },
+        grep = {
+          hidden = true,
+          config = function(opts)
+            local root = Snacks.git.get_root()
+            if root then
+              opts.cwd = root
+            end
+            return opts
+          end,
+        },
         explorer = { hidden = true },
         gh_issue = {},
         gh_pr = {},
+      },
+      win = {
+        input = {
+          keys = {
+            ["<c-j>"] = { "preview_scroll_down", mode = { "i", "n" } },
+            ["<c-k>"] = { "preview_scroll_up", mode = { "i", "n" } },
+          },
+        },
+        list = {
+          keys = {
+            ["<c-j>"] = "preview_scroll_down",
+            ["<c-k>"] = "preview_scroll_up",
+          },
+        },
       },
       layout = { default = { layout = { win = "preview", title = "hello {preview}" } } },
     },
