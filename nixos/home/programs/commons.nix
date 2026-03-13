@@ -8,6 +8,7 @@
 
     # Utils
     bat
+    btop
     dua
     entr
     eza
