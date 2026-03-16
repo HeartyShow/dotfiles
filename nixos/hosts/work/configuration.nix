@@ -13,7 +13,10 @@
   # Set the default editor to vim
   environment.variables.EDITOR = "vim";
 
-  security.pam.services.sudo_local.touchIdAuth = true;
+  security.pam.services.sudo_local = {
+    touchIdAuth = true;
+    reattach = true;
+  };
 
   system.primaryUser = "I584830";
 
