@@ -68,7 +68,16 @@
       "work" = nix-darwin.lib.darwinSystem {
         inherit specialArgs;
         system = "aarch64-darwin";
+
         modules = [
+          {
+            nixpkgs.config.allowUnfree = true;
+          }
+          ({ pkgs, ... }: {
+            environment.systemPackages = with pkgs; [
+              databricks-cli
+            ];
+          })
           ./darwin
           ./hosts/work/configuration.nix
           ./hosts/work/homebrew.nix
