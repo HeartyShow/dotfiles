@@ -14,6 +14,7 @@ return {
     opts = {
       linters_by_ft = {
         markdown = {},
+        mdx = {},
       },
     },
   },
@@ -22,6 +23,7 @@ return {
   {
     "MeanderingProgrammer/render-markdown.nvim",
     opts = {
+      file_types = { "markdown", "mdx", "markdown.mdx" },
       code = {
         language_border = " ",
         language_left = "",
@@ -47,6 +49,22 @@ return {
       sign = {
         enabled = false,
       },
+    },
+  },
+
+  -- Auto-continue lists / checkboxes on Enter
+  {
+    "gaoDean/autolist.nvim",
+    ft = { "markdown", "mdx" },
+    opts = {},
+    keys = {
+      { "<CR>", "<CR><cmd>AutolistNewBullet<cr>", mode = "i" },
+      { "o", "o<cmd>AutolistNewBullet<cr>" },
+      { "O", "O<cmd>AutolistNewBulletBefore<cr>" },
+      { "<Tab>", "<cmd>AutolistTab<cr>", mode = "i" },
+      { "<S-Tab>", "<cmd>AutolistShiftTab<cr>", mode = "i" },
+      { "<C-r>", "<cmd>AutolistRecalculate<cr>" },
+      { "<leader>x", "<cmd>AutolistToggleCheckbox<cr><CR>" },
     },
   },
 }
