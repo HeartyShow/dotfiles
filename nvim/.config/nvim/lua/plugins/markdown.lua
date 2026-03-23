@@ -63,7 +63,6 @@ return {
       { "O", "O<cmd>AutolistNewBulletBefore<cr>" },
       { "<Tab>", "<cmd>AutolistTab<cr>", mode = "i" },
       { "<S-Tab>", "<cmd>AutolistShiftTab<cr>", mode = "i" },
-      { "<C-r>", "<cmd>AutolistRecalculate<cr>" },
       { "<leader>x", "<cmd>AutolistToggleCheckbox<cr><CR>" },
     },
   },
