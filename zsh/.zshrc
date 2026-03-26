@@ -24,6 +24,16 @@ if [ ! -d "$TMUX_CATPPUCCIN_DIR" ]; then
    git clone -b v2.1.3 https://github.com/catppuccin/tmux.git "$TMUX_CATPPUCCIN_DIR"
 fi
 
+# Download Bat Catppuccin Mocha theme, if it's not there yet
+if command -v bat >/dev/null 2>&1; then
+   BAT_THEME_DIR="$(bat --config-dir)/themes"
+   BAT_MOCHA_THEME="${BAT_THEME_DIR}/Catppuccin Mocha.tmTheme"
+   if [ ! -f "$BAT_MOCHA_THEME" ]; then
+      mkdir -p "$BAT_THEME_DIR"
+      curl -fsSLo "$BAT_MOCHA_THEME" "https://github.com/catppuccin/bat/raw/main/themes/Catppuccin%20Mocha.tmTheme"
+      bat cache --build
+   fi
+fi
 
 autoload -Uz compinit
 compinit
@@ -135,3 +145,6 @@ export JAVA_HOME="/Library/Java/JavaVirtualMachines/sapmachine-25.jdk/Contents/H
 export GPG_TTY=$(tty)
 
 alias buildx="docker-buildx"
+# BEGIN databricks-cli completion
+eval "$(databricks completion zsh)"
+# END databricks-cli completion
