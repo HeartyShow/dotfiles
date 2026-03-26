@@ -6,3 +6,5 @@ font-size = 20
 theme = Catppuccin Mocha
 
 window-decoration = none
+
+mouse-scroll-multiplier = discrete:1,precision:1
