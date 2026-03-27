@@ -18,6 +18,7 @@
     gnumake
     just
     ripgrep
+    television
     unzip
     zoxide
     zip

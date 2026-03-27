@@ -11,5 +11,6 @@
     tmux
     tmuxinator
     sesh
+    worktrunk
   ];
 }
