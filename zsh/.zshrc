@@ -88,27 +88,12 @@ alias tx=tmuxinator
 # Shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init zsh)"
+eval "$(tv init zsh)"
+eval "$(wt config shell init zsh)"
 alias zscore="zoxide query --list --score"
 
 # Oh my posh
 eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/zen.toml)"
-
-# Tmux Sesh extension
-function sesh-sessions() {
-  {
-    exec </dev/tty
-    exec <&1
-    local session
-    session=$(sesh list -t -c | fzf --height 40% --reverse --border-label ' sesh ' --border --prompt '⚡  ')
-    [[ -z "$session" ]] && return
-    sesh connect $session
-  }
-}
-
-zle     -N             sesh-sessions
-bindkey -M emacs '\es' sesh-sessions
-bindkey -M vicmd '\es' sesh-sessions
-bindkey -M viins '\es' sesh-sessions
 
 # Nixos
 if [ -d /etc/NIXOS ] || command -v nixos-version >/dev/null 2>&1; then
@@ -145,6 +130,3 @@ export JAVA_HOME="/Library/Java/JavaVirtualMachines/sapmachine-25.jdk/Contents/H
 export GPG_TTY=$(tty)
 
 alias buildx="docker-buildx"
-# BEGIN databricks-cli completion
-eval "$(databricks completion zsh)"
-# END databricks-cli completion

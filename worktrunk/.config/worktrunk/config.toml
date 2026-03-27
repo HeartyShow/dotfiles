@@ -1,0 +1,17 @@
+# Worktrunk global configuration
+# Manages git worktrees with tmux window integration
+#
+# Workflow:
+#   sesh picks the project (tmux session)
+#   prefix+g opens worktree picker (television)
+#   worktrunk creates/switches worktree branch
+#   hooks create tmux windows with nvim + terminal + opencode panes
+
+# Worktree path: sibling directory named repo.branch
+worktree-path = "{{ repo_path }}/../{{ repo }}.{{ branch | sanitize }}"
+
+# --- Hooks ---
+
+# Auto-cleanup: kill tmux window when worktree is removed or merged
+[post-remove]
+tmux-cleanup = '[ -n "$TMUX" ] && tmux kill-window -t "{{ branch | sanitize }}" 2>/dev/null || true'
