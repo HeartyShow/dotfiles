@@ -3,6 +3,13 @@
 
 export XDG_CONFIG_HOME="$HOME/.config"
 
+# Lazygit: load device-specific config if it exists
+LG_LOCAL="$HOME/.config/lazygit/config.local.yml"
+if [ -f "$LG_LOCAL" ]; then
+  export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml,$LG_LOCAL"
+fi
+unset LG_LOCAL
+
 # Sheldon zsh package manager
 if command -v sheldon >/dev/null 2>&1; then
   eval "$(sheldon source)"

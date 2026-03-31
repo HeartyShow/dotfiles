@@ -7,8 +7,9 @@
 #   worktrunk creates/switches worktree branch
 #   hooks create tmux windows with nvim + terminal + opencode panes
 
-# Worktree path: sibling directory named repo.branch
-worktree-path = "{{ repo_path }}/../{{ repo }}.{{ branch | sanitize }}"
+# Worktree path: subdirectory of the project root (bare repo layout)
+# .git/ is the bare repo, worktrees are siblings: project/main/, project/feature/, etc.
+worktree-path = "{{ repo_path }}/../{{ branch | sanitize }}"
 
 # --- Hooks ---
 

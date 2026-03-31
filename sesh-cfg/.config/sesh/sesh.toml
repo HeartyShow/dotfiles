@@ -1,5 +1,5 @@
 [default_session]
-startup_command = "tmux rename-window \"$(basename {})\" && tmux set-option -w automatic-rename off && tmux split-window -v -c {} -l 25% && tmux select-pane -t 1 && tmux resize-pane -Z && nvim"
+startup_command = " tmux rename-window hub && tmux set-option -w automatic-rename off && clear"
 preview_command = "eza --all --git --icons --color=always {}"
 
 [[session]]

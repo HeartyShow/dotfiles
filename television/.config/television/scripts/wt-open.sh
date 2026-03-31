@@ -27,10 +27,6 @@ else
   wt switch --no-cd "$B" || exit 1
 fi
 
-# If a tmux window with this name already exists, we're done
-# (post-start hook or previous invocation already created it)
-tmux list-windows -F '#W' | grep -qx "$B" && exit 0
-
 # Get the worktree path
 P=$(wt list --format=json | jq -r --arg b "$B" '.[] | select(.branch == $b) | .path')
 if [ -z "$P" ]; then
@@ -38,11 +34,12 @@ if [ -z "$P" ]; then
   exit 1
 fi
 
-# Create window with 3-pane layout
-tmux new-window -n "$B" -c "$P"
-tmux split-window -h -t "$B" -c "$P" -l 40%
-tmux split-window -v -t "$B.1" -c "$P" -l 25%
-tmux send-keys -t "$B.1" 'nvim' Enter
-tmux send-keys -t "$B.3" 'opencode' Enter
-tmux select-pane -t "$B.1"
-tmux resize-pane -Z -t "$B.1"
+# Create window and capture its unique ID for reliable targeting
+W=$(tmux new-window -n "$B" -c "$P" -P -F '#{window_id}')
+tmux set-option -t "$W" -w automatic-rename off
+tmux split-window -h -t "$W" -c "$P" -l 40%
+tmux split-window -v -t "$W.1" -c "$P" -l 25%
+tmux send-keys -t "$W.1" 'nvim' Enter
+tmux send-keys -t "$W.3" 'opencode' Enter
+tmux select-pane -t "$W.1"
+tmux resize-pane -Z -t "$W.1"
