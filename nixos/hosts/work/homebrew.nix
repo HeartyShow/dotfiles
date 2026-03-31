@@ -20,7 +20,7 @@
     enable = true;
     greedyCasks = true;
     onActivation = {
-      upgrade = true;
+      upgrade = false;
       cleanup = "zap";
     };
     taps = builtins.attrNames config.nix-homebrew.taps;

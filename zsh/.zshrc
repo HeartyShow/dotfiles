@@ -92,11 +92,28 @@ export EDITOR="nvim"
 # Tmux
 alias tx=tmuxinator
 
+# Bare clone a repo into ~/Documents/dev/<repo> with a main worktree
+clone() {
+  local url="$1"
+  if [ -z "$url" ]; then
+    echo "Usage: clone <git-url>" >&2
+    return 1
+  fi
+  local repo=$(basename "$url" .git)
+  local dest="$HOME/Documents/dev/$repo"
+  if [ -d "$dest" ]; then
+    echo "Already exists: $dest" >&2
+    return 1
+  fi
+  git clone --bare "$url" "$dest/.git" && wt switch --no-cd main -C "$dest"
+}
+
 # Shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init zsh)"
 eval "$(tv init zsh)"
 eval "$(wt config shell init zsh)"
+eval "$(mise activate zsh)"
 alias zscore="zoxide query --list --score"
 
 # Oh my posh
@@ -113,11 +130,6 @@ if [ -d /etc/NIXOS ] || command -v nixos-version >/dev/null 2>&1; then
   }
 fi
 
-# Fast Node Manager
-if command -v fnm >/dev/null 2>&1; then
-  eval "$(fnm env --use-on-cd --shell zsh)"
-fi
-
 # Cargo/Rust
 if command -v cargo >/dev/null 2>&1; then
   export CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
@@ -129,9 +141,6 @@ if command -v go >/dev/null 2>&1; then
   export GOPATH="${GOPATH:-$HOME/go}"
   export PATH="$GOPATH/bin:$PATH"
 fi
-
-#Java
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/sapmachine-25.jdk/Contents/Home"
 
 # GPG signatures
 export GPG_TTY=$(tty)

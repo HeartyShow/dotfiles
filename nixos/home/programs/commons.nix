@@ -17,6 +17,7 @@
     gcc
     gnumake
     just
+    mise
     ripgrep
     television
     unzip

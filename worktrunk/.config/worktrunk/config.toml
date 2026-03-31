@@ -13,6 +13,10 @@ worktree-path = "{{ repo_path }}/../{{ branch | sanitize }}"
 
 # --- Hooks ---
 
+# When a new worktree is created, install tools via mise if configured
+[post-start]
+setup = "[ -f .mise.toml ] && mise install --yes 2>/dev/null || true"
+
 # Auto-cleanup: kill tmux window when worktree is removed or merged
 [post-remove]
 tmux-cleanup = '[ -n "$TMUX" ] && tmux kill-window -t "{{ branch | sanitize }}" 2>/dev/null || true'
