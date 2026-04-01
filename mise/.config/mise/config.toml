@@ -1,0 +1,4 @@
+[settings]
+experimental = true
+trusted_config_paths = ["~"]
+color_theme = "catppuccin"
