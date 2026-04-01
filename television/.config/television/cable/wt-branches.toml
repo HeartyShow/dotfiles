@@ -37,8 +37,8 @@ command = "sh ~/.dotfiles/television/.config/television/scripts/wt-open.sh '{spl
 mode = "execute"
 
 [actions.create]
-description = "Create NEW branch + worktree and open in tmux window"
-command = "sh ~/.dotfiles/television/.config/television/scripts/wt-open.sh '{split:\\t:0}' --create"
+description = "Create new branch from selected base"
+command = "sh ~/.dotfiles/television/.config/television/scripts/wt-create.sh '{split:\\t:0}'"
 mode = "execute"
 
 [actions.remove]
