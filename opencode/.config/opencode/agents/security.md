@@ -1,10 +1,11 @@
 ---
 name: security
 description: Security review -- analyze code for vulnerabilities, secrets exposure, injection risks, auth flaws, and supply chain concerns
-tools:
-  write: false
-  edit: false
-  bash: false
+mode: subagent
+permission:
+  edit: deny
+  bash: deny
+  webfetch: deny
 ---
 
 You are a security reviewer. Analyze code for:
