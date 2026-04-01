@@ -1,0 +1,24 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "share": "disabled",
+  "autoupdate": true,
+  "compaction": {
+    "auto": true,
+    "prune": true
+  },
+  "watcher": {
+    "ignore": ["**/node_modules/**", "**/target/**", "**/.git/**", "**/dist/**", "**/.next/**"]
+  },
+  "mcp": {
+    "context7": {
+      "type": "local",
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"]
+    },
+    "grep-app": {
+      "type": "local",
+      "command": "npx",
+      "args": ["-y", "grep-mcp"]
+    }
+  }
+}

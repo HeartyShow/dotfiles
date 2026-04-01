@@ -3,12 +3,20 @@
 
 export XDG_CONFIG_HOME="$HOME/.config"
 
-# Lazygit: load device-specific config if it exists
-LG_LOCAL="$HOME/.config/lazygit/config.local.yml"
+# ── Machine-local config overrides (~/.config/local/) ─────────
+# Lazygit: merge local config if it exists
+LG_LOCAL="$HOME/.config/local/lazygit.yml"
 if [ -f "$LG_LOCAL" ]; then
   export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml,$LG_LOCAL"
 fi
 unset LG_LOCAL
+
+# OpenCode: load device-specific config if it exists
+OC_LOCAL="$HOME/.config/local/opencode.json"
+if [ -f "$OC_LOCAL" ]; then
+  export OPENCODE_CONFIG="$OC_LOCAL"
+fi
+unset OC_LOCAL
 
 # Sheldon zsh package manager
 if command -v sheldon >/dev/null 2>&1; then
@@ -105,7 +113,10 @@ clone() {
     echo "Already exists: $dest" >&2
     return 1
   fi
-  git clone --bare "$url" "$dest/.git" && wt switch --no-cd main -C "$dest"
+  git clone --bare "$url" "$dest/.git" \
+    && git -C "$dest" config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*' \
+    && git -C "$dest" fetch origin \
+    && wt switch --no-cd main -C "$dest"
 }
 
 # Shell integrations

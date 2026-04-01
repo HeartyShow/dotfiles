@@ -1,4 +1,7 @@
 btop/.config/btop/btop.log
 .DS_Store
 /bat/.config/bat/themes
-/lazygit/.config/lazygit/config.local.yml
+/opencode/.config/opencode/node_modules
+/opencode/.config/opencode/bun.lock
+/opencode/.config/opencode/.gitignore
+/opencode/.config/opencode/opencode.json.tui-migration.bak
