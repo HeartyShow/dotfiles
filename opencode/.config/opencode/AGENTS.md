@@ -30,3 +30,5 @@
 - Always check for existing tests before modifying logic.
 - When unsure about a framework API, use context7 to check current
   docs before guessing.
+- If unsure how to implement something, use gh_grep to search
+  real code examples from GitHub.

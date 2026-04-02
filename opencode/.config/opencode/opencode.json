@@ -2,18 +2,13 @@
   "$schema": "https://opencode.ai/config.json",
   "share": "disabled",
   "autoupdate": true,
+  "plugin": [
+    "./plugins/bell.mjs",
+    "@tarquinen/opencode-dcp"
+  ],
   "compaction": {
     "auto": true,
     "prune": true
-  },
-  "watcher": {
-    "ignore": [
-      "**/node_modules/**",
-      "**/target/**",
-      "**/.git/**",
-      "**/dist/**",
-      "**/.next/**"
-    ]
   },
   "mcp": {
     "context7": {
