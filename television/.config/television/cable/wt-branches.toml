@@ -14,14 +14,14 @@ requirements = ["wt", "git", "jq"]
 
 [source]
 command = [
-  # Default: existing worktrees with status
-  "wt list --format=json 2>/dev/null | jq -r '.[] | \"\\(.branch)\\t\\(.status // \"-\")\\t\\(.path)\"' || echo 'No worktrees'",
+  # Default: existing worktrees (branch names only)
+  "wt list --format=json 2>/dev/null | jq -r '.[].branch' || echo 'No worktrees'",
   # Alt: all local + remote branches (for creating new worktrees)
   "git branch --all --format='%(refname:short)' | sed 's|^origin/||' | sort -u",
 ]
 
 [preview]
-command = "git log --oneline --graph --color=always -20 '{split:\\t:0}' 2>/dev/null || git log --oneline --graph --color=always -20 '{}'"
+command = "git log --oneline --graph --color=always -20 '{}' 2>/dev/null"
 
 [ui]
 input_header = " Worktree Branches"
@@ -33,15 +33,15 @@ ctrl-d = "actions:remove"
 
 [actions.open]
 description = "Open worktree in new tmux window"
-command = "sh ~/.dotfiles/television/.config/television/scripts/wt-open.sh '{split:\\t:0}'"
+command = "sh ~/.dotfiles/television/.config/television/scripts/wt-open.sh '{}'"
 mode = "execute"
 
 [actions.create]
 description = "Create new branch from selected base"
-command = "sh ~/.dotfiles/television/.config/television/scripts/wt-create.sh '{split:\\t:0}'"
+command = "sh ~/.dotfiles/television/.config/television/scripts/wt-create.sh '{}'"
 mode = "execute"
 
 [actions.remove]
 description = "Remove worktree"
-command = "wt remove '{split:\\t:0}'"
+command = "wt remove '{}'"
 mode = "execute"
