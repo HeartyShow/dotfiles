@@ -18,6 +18,8 @@
 ## Environment
 - I use git worktrees (bare clone + worktrunk).
   The `.git` dir is one level above the worktree checkout.
+  Each worktree directory corresponds to one branch.
+  Never reference or edit files in a sibling worktree directory.
 - I use Nix (nix-darwin on macOS, NixOS on Linux).
   For system-level changes, modify the flake, don't install manually.
 
