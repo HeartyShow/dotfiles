@@ -130,25 +130,20 @@ alias zscore="zoxide query --list --score"
 # Oh my posh
 eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/zen.toml)"
 
-# Nixos
+# Nix rebuild & update
 if [ -d /etc/NIXOS ] || command -v nixos-version >/dev/null 2>&1; then
-  rebuild() {
-    local flake_path="path:$HOME/.dotfiles/nixos"
-    if [ -n "$1" ]; then
-      flake_path="${flake_path}#$1"
-    fi
-    sudo nixos-rebuild switch --flake "$flake_path" --impure
-  }
+  _nix_rebuild_cmd=(sudo nixos-rebuild switch --impure)
+elif [[ "$(uname)" == "Darwin" ]] && command -v darwin-rebuild >/dev/null 2>&1; then
+  _nix_rebuild_cmd=(sudo darwin-rebuild switch)
 fi
 
-# nix-darwin
-if [[ "$(uname)" == "Darwin" ]] && command -v darwin-rebuild >/dev/null 2>&1; then
+if (( ${#_nix_rebuild_cmd} )); then
   rebuild() {
     if [ -z "$1" ]; then
       echo "Usage: rebuild <profile>" >&2
       return 1
     fi
-    sudo darwin-rebuild switch --flake "path:$HOME/.dotfiles/nixos#$1"
+    "${_nix_rebuild_cmd[@]}" --flake "path:$HOME/.dotfiles/nixos#$1"
   }
 
   update() {
