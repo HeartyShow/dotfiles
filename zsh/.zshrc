@@ -141,6 +141,26 @@ if [ -d /etc/NIXOS ] || command -v nixos-version >/dev/null 2>&1; then
   }
 fi
 
+# nix-darwin
+if [[ "$(uname)" == "Darwin" ]] && command -v darwin-rebuild >/dev/null 2>&1; then
+  rebuild() {
+    if [ -z "$1" ]; then
+      echo "Usage: rebuild <profile>" >&2
+      return 1
+    fi
+    sudo darwin-rebuild switch --flake "path:$HOME/.dotfiles/nixos#$1"
+  }
+
+  update() {
+    if [ -z "$1" ]; then
+      echo "Usage: update <profile>" >&2
+      return 1
+    fi
+    echo "Updating flake inputs..."
+    nix flake update --flake "path:$HOME/.dotfiles/nixos" && rebuild "$@"
+  }
+fi
+
 # Cargo/Rust
 if command -v cargo >/dev/null 2>&1; then
   export CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"

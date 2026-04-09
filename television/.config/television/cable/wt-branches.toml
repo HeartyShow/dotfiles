@@ -16,8 +16,8 @@ requirements = ["wt", "git", "jq"]
 command = [
   # Default: existing worktrees (branch names only)
   "wt list --format=json 2>/dev/null | jq -r '.[].branch' || echo 'No worktrees'",
-  # Alt: all local + remote branches (for creating new worktrees)
-  "git branch --all --format='%(refname:short)' | sed 's|^origin/||' | sort -u",
+  # Alt: all local + remote branches (fetches first to stay current)
+  "git fetch --prune origin >/dev/null 2>&1; git branch --all --format='%(refname:short)' | sed 's|^origin/||' | sort -u",
 ]
 
 [preview]
@@ -30,6 +30,7 @@ input_header = " Worktree Branches"
 enter = "actions:open"
 ctrl-g = "actions:create"
 ctrl-d = "actions:remove"
+ctrl-r = "reload_source"
 
 [actions.open]
 description = "Open worktree in new tmux window"
