@@ -8,7 +8,7 @@ description = "Session manager integrating tmux sessions, zoxide directories, an
 requirements = ["sesh"]
 
 [source]
-command = "sesh list --icons"
+command = "sesh list --icons --hide-attached"
 ansi = true
 output = "{strip_ansi|split: :1..|join: }"
 
