@@ -11,7 +11,9 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        cds_lsp = {},
+        cds_lsp = {
+          root_markers = { '.cdsrc.json', '.cdsrc.yml' },
+        },
       },
     },
   },
