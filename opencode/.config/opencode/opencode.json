@@ -5,7 +5,8 @@
   "autoupdate": true,
   "plugin": [
     "./plugins/bell.mjs",
-    "@tarquinen/opencode-dcp"
+    "@tarquinen/opencode-dcp",
+    "opencode-mermaid-renderer"
   ],
   "compaction": {
     "auto": true,

@@ -8,10 +8,10 @@ Review the following pull request:
 
 **PR metadata:**
 ```
-$!gh pr view $1 --json title,body,author,baseRefName,headRefName,labels,additions,deletions,changedFiles
+!`gh pr view $1 --json title,body,author,baseRefName,headRefName,labels,additions,deletions,changedFiles`
 ```
 
 **Diff:**
 ```
-$!gh pr diff $1
+!`gh pr diff $1`
 ```
