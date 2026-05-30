@@ -1,6 +1,11 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "default_agent": "plan",
+  "agent": {
+    "plan": {
+      "prompt": "{file:./prompts/plan-style.md}"
+    }
+  },
   "instructions": [
     "./instructions/analysis-style.md"
   ],
