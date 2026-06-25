@@ -9,7 +9,7 @@
 
 # Worktree path: subdirectory of the project root (bare repo layout)
 # .git/ is the bare repo, worktrees are siblings: project/main/, project/feature/, etc.
-worktree-path = "{{ repo_path }}/../{{ branch | sanitize }}"
+worktree-path = "{{ repo_path }}/../{{ branch | sanitize_db }}"
 
 # --- Hooks ---
 
