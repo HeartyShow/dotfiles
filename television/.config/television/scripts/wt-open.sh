@@ -3,11 +3,11 @@
 #
 # Usage: wt-open <branch> [--create]
 #
-# Layout (nvim zoomed on entry):
+# Layout:
 #   ┌──────────┬─────────────┐
 #   │          │             │
 #   │   nvim   │  opencode   │
-#   │ (zoomed) │             │
+#   │          │             │
 #   ├──────────┤             │
 #   │ terminal │             │
 #   └──────────┴─────────────┘
@@ -42,4 +42,3 @@ tmux split-window -v -t "$W.1" -c "$P" -l 25%
 tmux send-keys -t "$W.1" 'nvim' Enter
 tmux send-keys -t "$W.3" 'opencode' Enter
 tmux select-pane -t "$W.1"
-tmux resize-pane -Z -t "$W.1"
