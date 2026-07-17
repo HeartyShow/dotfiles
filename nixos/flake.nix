@@ -31,6 +31,11 @@
       flake = false;
     };
 
+    homebrew-netbird = {
+      url= "github:netbirdio/homebrew-tap";
+      flake = false;
+    };
+
     homebrew-sapmachine = {
       url= "github:SAP/homebrew-SapMachine";
       flake = false;
