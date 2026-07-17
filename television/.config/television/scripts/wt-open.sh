@@ -37,8 +37,9 @@ fi
 # Create window and capture its unique ID for reliable targeting
 W=$(tmux new-window -n "$B" -c "$P" -P -F '#{window_id}')
 tmux set-option -t "$W" -w automatic-rename off
-tmux split-window -h -t "$W" -c "$P" -l 40%
-tmux split-window -v -t "$W.1" -c "$P" -l 25%
-tmux send-keys -t "$W.1" 'nvim' Enter
-tmux send-keys -t "$W.3" 'opencode' Enter
-tmux select-pane -t "$W.1"
+NVIM=$(tmux display-message -p -t "$W.1" '#{pane_id}')
+OPENCODE=$(tmux split-window -h -t "$NVIM" -c "$P" -l 50% -P -F '#{pane_id}')
+tmux split-window -v -t "$NVIM" -c "$P" -l 25% >/dev/null
+tmux send-keys -t "$NVIM" 'nvim' Enter
+tmux send-keys -t "$OPENCODE" 'opencode' Enter
+tmux select-pane -t "$NVIM"
