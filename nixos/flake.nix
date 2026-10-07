@@ -20,26 +20,6 @@
     };
 
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
-
-    # homebrew-hai = {
-    #   url = "git+https://github.tools.sap/hAIperspace/hai-homebrew.git";
-    #   flake = false;
-    # };
-
-    homebrew-cloudfoundry = {
-      url= "github:cloudfoundry/homebrew-tap";
-      flake = false;
-    };
-
-    homebrew-netbird = {
-      url= "github:netbirdio/homebrew-tap";
-      flake = false;
-    };
-
-    homebrew-sapmachine = {
-      url= "github:SAP/homebrew-SapMachine";
-      flake = false;
-    };
   };
 
   outputs = { self, nixpkgs, home-manager, nixos-wsl, nix-darwin, ... }@inputs: 
@@ -76,6 +56,7 @@
 
         modules = [
           {
+            nix.enable = false;
             nixpkgs.config.allowUnfree = true;
           }
           ({ pkgs, ... }: {

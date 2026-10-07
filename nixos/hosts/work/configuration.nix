@@ -18,11 +18,6 @@
     reattach = true;
   };
 
-  system.primaryUser = "I584830";
-
-  system.defaults = {
-    loginwindow.LoginwindowText = username;
-  };
-
+  system.primaryUser = "alexandre.vialar";
   users.users.${username}.shell = pkgs.zsh;
 }

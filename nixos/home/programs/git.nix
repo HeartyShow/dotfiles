@@ -7,7 +7,6 @@
     gh
     gh-dash
     git
-    git-credential-manager
     lazygit
   ];
 }

@@ -7,6 +7,15 @@
 
   system.defaults = {
     CustomUserPreferences = {
+      "com.apple.HIToolbox" = {
+        AppleEnabledInputSources = [
+          {
+            InputSourceKind = "Keyboard Layout";
+            "KeyboardLayout ID" = 0;
+            "KeyboardLayout Name" = "U.S.";
+          }
+        ];
+      };
       "com.apple.symbolichotkeys" = {
         AppleSymbolicHotKeys = {
           "60" = {
