@@ -26,6 +26,7 @@
   let
     username = "hearty";
     specialArgs = { inherit inputs username; };
+    workSpecialArgs = specialArgs // { username = "alexandre.vialar"; };
 
   in {
     nixosConfigurations = {
@@ -51,7 +52,7 @@
 
     darwinConfigurations = {
       "work" = nix-darwin.lib.darwinSystem {
-        inherit specialArgs;
+        specialArgs = workSpecialArgs;
         system = "aarch64-darwin";
 
         modules = [
@@ -59,11 +60,6 @@
             nix.enable = false;
             nixpkgs.config.allowUnfree = true;
           }
-          ({ pkgs, ... }: {
-            environment.systemPackages = with pkgs; [
-              databricks-cli
-            ];
-          })
           ./darwin
           ./hosts/work/configuration.nix
           ./hosts/work/homebrew.nix

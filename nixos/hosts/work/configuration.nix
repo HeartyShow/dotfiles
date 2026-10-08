@@ -18,6 +18,6 @@
     reattach = true;
   };
 
-  system.primaryUser = "alexandre.vialar";
+  system.primaryUser = username;
   users.users.${username}.shell = pkgs.zsh;
 }
