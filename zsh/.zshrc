@@ -12,7 +12,7 @@ fi
 unset LG_LOCAL
 
 # OpenCode: load device-specific config if it exists
-OC_LOCAL="$HOME/.config/local/opencode.json"
+OC_LOCAL="$HOME/.config/local/opencode/opencode.json"
 if [ -f "$OC_LOCAL" ]; then
   export OPENCODE_CONFIG="$OC_LOCAL"
 fi
@@ -172,3 +172,6 @@ fi
 export GPG_TTY=$(tty)
 
 alias buildx="docker-buildx"
+
+# Machine-local shell config (not committed)
+[ -f "$HOME/.config/local/zshrc" ] && source "$HOME/.config/local/zshrc"
