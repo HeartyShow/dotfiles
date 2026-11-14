@@ -1,0 +1,115 @@
+command_alias_start_index: 200
+keybindings:
+  prefix_table: "?"
+title:
+  style: align=centre,bold
+  prefix: tmux
+  prefix_style: fg=blue,align=centre,bold
+position:
+  x: C
+  y: C
+custom_variables: []
+macros: []
+items:
+  - name: Sessions (sesh)
+    key: f
+    command: 'display-popup -E -w 80% -h 70% -d "#{pane_current_path}" -T " Sessions " "tv sesh ."'
+  - name: GitHub (gh-dash)
+    key: g
+    command: 'display-popup -E -w 95% -h 90% -d "#{pane_current_path}" -T " GitHub " gh-dash'
+  - name: Review (tuicr)
+    key: t
+    command: 'display-popup -E -w 95% -h 90% -d "#{pane_current_path}" -T " Review " tuicr'
+  - separator: true
+  - name: +Windows
+    key: n
+    menu:
+      - name: Choose
+        key: w
+        command: choose-tree -Zw
+      - name: New
+        key: c
+        command: 'neww -c "#{pane_current_path}"'
+      - name: Previous
+        key: h
+        command: previous-window
+        transient: true
+      - name: Next
+        key: l
+        command: next-window
+        transient: true
+      - name: Rename
+        key: r
+        command: command-prompt -p "Rename window:" -I "#W" "renamew -- \"%%\""
+      - name: Kill
+        key: X
+        command: killw
+  - name: +Panes
+    key: p
+    menu:
+      - name: Split horizontal
+        key: b
+        command: 'splitw -h -c "#{pane_current_path}"'
+      - name: Split vertical
+        key: v
+        command: 'splitw -v -c "#{pane_current_path}"'
+      - name: Zoom
+        key: z
+        command: resizep -Z
+      - name: Break to window
+        key: "!"
+        command: break-pane
+      - name: Kill
+        key: x
+        command: killp
+      - separator: true
+      - name: Resize left
+        key: h
+        command: resizep -L 5
+        transient: true
+      - name: Resize down
+        key: j
+        command: resizep -D 5
+        transient: true
+      - name: Resize up
+        key: k
+        command: resizep -U 5
+        transient: true
+      - name: Resize right
+        key: l
+        command: resizep -R 5
+        transient: true
+  - name: +Sessions
+    key: s
+    menu:
+      - name: Choose
+        key: s
+        command: choose-tree -Zs
+      - name: Rename
+        key: r
+        command: command-prompt -p "Rename session:" -I "#S" "rename-session -- \"%%\""
+      - name: Detach
+        key: d
+        command: detach
+  - name: +Plugins
+    key: P
+    menu:
+      - name: Install
+        key: i
+        command: run-shell $TMUX_PLUGIN_MANAGER_PATH/tpm/bindings/install_plugins
+      - name: Update
+        key: u
+        command: run-shell $TMUX_PLUGIN_MANAGER_PATH/tpm/bindings/update_plugins
+      - name: Clean
+        key: c
+        command: run-shell $TMUX_PLUGIN_MANAGER_PATH/tpm/bindings/clean_plugins
+  - separator: true
+  - name: Copy mode
+    key: "]"
+    command: copy-mode
+  - name: Reload config
+    key: r
+    command: source-file ~/.tmux.conf
+  - name: All key bindings
+    key: "?"
+    command: list-keys -N
