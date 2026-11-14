@@ -1,0 +1,26 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "assistant",
+  "agent": {
+    "assistant": {
+      "tools": {
+        "linear_*": true,
+        "notion_*": true,
+        "slack_*": true,
+        "google_*": true,
+        "github_*": true,
+        "ashby_*": true
+      }
+    },
+    "general": {
+      "tools": {
+        "linear_*": true,
+        "notion_*": true,
+        "slack_*": true,
+        "google_*": true,
+        "github_*": true,
+        "ashby_*": true
+      }
+    }
+  }
+}

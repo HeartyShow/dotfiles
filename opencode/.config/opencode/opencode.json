@@ -12,14 +12,14 @@
   "share": "disabled",
   "autoupdate": true,
   "plugin": [
-    "./plugins/bell.mjs",
-    "@tarquinen/opencode-dcp",
-    "opencode-mermaid-renderer"
+    "@tarquinen/opencode-dcp"
   ],
   "lsp": true,
   "compaction": {
-    "auto": true,
-    "prune": true
+    "auto": true
+  },
+  "experimental": {
+    "artifacts": true
   },
   "mcp": {
     "context7": {

@@ -12,9 +12,14 @@
 - Never hardcode secrets, tokens, or credentials.
 - Validate and sanitize all external input.
 
+## Company context
+- When a task needs company context (tickets, specs, design docs, Slack discussions, PR history, hiring data), delegate to @research instead of guessing.
+- Typical triggers: a Linear key (e.g. ABC-123), "the spec/RFC for…", "what was decided about…", "who owns…", links to Notion/Slack/Drive/Linear.
+- Do not use @research for code answerable from the repo, library docs (use context7), or public code examples (use gh_grep).
+
 ## Environment
 - I use git worktrees (bare clone + worktrunk), use the dedicated skill.
-- I use Nix (nix-darwin on macOS, NixOS on Linux). For system-level changes, modify the flake, don't install manually, check the dedicated skill
+- Configs and system packages live in ~/.dotfiles (stow + Nix flake, nix-darwin on macOS, NixOS on Linux); never install manually, use the `dotfiles` skill.
 
 ## Coding style
 - Code should be self-documenting, comments should only explain hard-to-read and specific behaviors.
@@ -23,16 +28,11 @@
 
 ## Diagrams
 - Always use mermaid code blocks (```mermaid) for diagrams and flowcharts.
-  Never generate raw ASCII art diagrams — a plugin renders mermaid to ASCII automatically.
+  Never generate raw ASCII art diagrams — OpenCode renders mermaid natively.
 - Prefer top-down (TD) layout over left-right (LR) to avoid horizontal overflow,
   but use LR when the content genuinely flows better horizontally.
-- Keep diagrams concise — they render as ASCII art in a terminal at large font size.
-  Favour fewer nodes with clear labels over exhaustive detail.
-- Supported diagram types: flowcharts (graph TD/LR/BT/RL), state diagrams,
-  sequence diagrams, class diagrams, ER diagrams, XY charts.
-  Do NOT use unsupported types (pie, gantt, mindmap, timeline, etc.).
-- Do NOT use <br/> `\n` or HTML tags in node labels — they are not rendered.
-  Use short single-line labels instead.
+- Keep diagrams concise: favour fewer nodes with clear labels over exhaustive detail.
+- Do NOT use pie charts — they are not rendered; use a table instead.
 
 ## Behavior
 - Always check for existing tests before modifying logic.
@@ -40,3 +40,4 @@
   docs before guessing.
 - If unsure how to implement something, use gh_grep to search
   real code examples from GitHub.
+- When referencing PRs, issues, docs, commits or repo files, embed markdown links.

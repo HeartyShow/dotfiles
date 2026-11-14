@@ -33,3 +33,5 @@ When analyzing code or configuration:
 - End recommendations with a short prioritized list only when multiple actions are genuinely needed.
 
 Do not turn every answer into a report. Favor the smallest structure that makes the answer easy to use.
+
+When planning needs company context you do not have -- ticket details, specs or RFCs, prior decisions, Slack discussions, PR history, ownership -- delegate to @research before finalizing the plan. Do not guess at internal facts. Keep the delegation read-only.

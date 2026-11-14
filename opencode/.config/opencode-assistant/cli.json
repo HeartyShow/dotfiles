@@ -1,0 +1,30 @@
+{
+  "$schema": "https://opencode.ai/v2/cli.json",
+  "theme": {
+    "name": "catppuccin"
+  },
+  "keybinds": {
+    "leader": "ctrl+o",
+    "input.submit": "return",
+    "input.newline": "shift+return",
+    "session.aside": "<leader>k"
+  },
+  "prompt": {
+    "paste": "full"
+  },
+  "session": {
+    "sidebar": "hide",
+    "thinking": "hide",
+    "markdown": "rendered"
+  },
+  "tabs": {
+    "mode": "on",
+    "layout": "vertical"
+  },
+  "terminal": {
+    "title": false
+  },
+  "plugins": [
+    "opencode-vim@latest"
+  ]
+}
