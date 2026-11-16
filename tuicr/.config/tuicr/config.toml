@@ -1,0 +1,11 @@
+theme = "catppuccin-mocha"
+diff_view = "side-by-side"
+ignore_whitespace = false
+relative_line_numbers = true
+
+comment_types = [
+  { id = "question", definition = "needs an answer, not a change", color = "yellow" },
+  { id = "issue", definition = "problem to fix", color = "red" },
+  { id = "suggestion", definition = "possible improvement, weigh it" },
+  { id = "note", definition = "context, no action needed" },
+]
