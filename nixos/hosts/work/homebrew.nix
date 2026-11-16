@@ -19,7 +19,7 @@
       upgrade = false;
       cleanup = "zap";
     };
-    taps = builtins.attrNames config.nix-homebrew.taps;
+    taps = builtins.attrNames config.nix-homebrew.taps ++ [ "crmne/tap" "tonisives/tap" ];
     casks = [
       "betterdisplay"
       "bruno"
@@ -27,9 +27,13 @@
       "figma"
       "ghostty"
       "logitech-g-hub"
+      "losslesscut"
+      "notion"
       "obsidian"
+      "tonisives/tap/ovim"
       "raycast"
       "spotify"
+      "crmne/tap/spotifast"
       "upscayl"
       "visual-studio-code"
       "vlc"

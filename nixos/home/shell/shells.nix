@@ -3,6 +3,7 @@
   ...
 }: {
   environment.systemPackages = with pkgs; [
+    coreutils
     zsh
     sheldon
     oh-my-posh
