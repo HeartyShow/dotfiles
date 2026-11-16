@@ -15,7 +15,7 @@
     "fullscreen": true
   },
   "prompt": {
-    "paste": "full"
+    "paste": "compact"
   },
   "session": {
     "sidebar": "hide",
