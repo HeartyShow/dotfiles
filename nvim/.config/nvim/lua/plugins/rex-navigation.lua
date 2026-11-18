@@ -4,14 +4,32 @@ if not vim.env.REX_SESSION or not vim.env.REX_BIN_DIR then
   return {}
 end
 
+-- Floats placed inside a split (e.g. the snacks explorer) navigate from that split,
+-- otherwise `wincmd` from a float jumps back into the editor instead of stopping at the edge.
+local function anchor(win)
+  local config = vim.api.nvim_win_get_config(win)
+  while config.relative == "win" and config.win do
+    win = config.win
+    config = vim.api.nvim_win_get_config(win)
+  end
+  return win
+end
+
 local function navigate(wincmd, direction)
   local win = vim.api.nvim_get_current_win()
-  vim.cmd.wincmd(wincmd)
-  if vim.api.nvim_get_current_win() == win then
+  local from = anchor(win)
+  local target = vim.api.nvim_win_call(from, function()
+    return vim.fn.win_getid(vim.fn.winnr(wincmd))
+  end)
+  if target == from then
     vim.system({
       vim.env.REX_BIN_DIR .. "/rex", "-S", vim.env.REX_SERVER,
       "do", "-s", vim.env.REX_SESSION, "focus_pane", "direction=" .. direction,
     })
+  elseif from == win then
+    vim.cmd.wincmd(wincmd)
+  else
+    vim.api.nvim_set_current_win(target)
   end
 end
 
