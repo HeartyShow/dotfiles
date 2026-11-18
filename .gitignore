@@ -1,7 +1,9 @@
 btop/.config/btop/btop.log
 .DS_Store
 /bat/.config/bat/themes
-/opencode/.config/opencode/node_modules
-/opencode/.config/opencode/bun.lock
+/opencode/.config/opencode*/node_modules
+/opencode/.config/opencode*/bun.lock
 /opencode/.config/opencode/.gitignore
 /opencode/.config/opencode/opencode.json.tui-migration.bak
+/opencode/.config/opencode/service*.json
+/worktrunk/.config/worktrunk/approvals.toml*

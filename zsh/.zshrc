@@ -171,6 +171,9 @@ fi
 # GPG signatures
 export GPG_TTY=$(tty)
 
+# Rex panes restored after a server restart lose its PATH entry but keep REX_BIN_DIR
+[ -n "$REX_BIN_DIR" ] && export PATH="$REX_BIN_DIR:$PATH"
+
 alias buildx="docker-buildx"
 
 # Machine-local shell config (not committed)
