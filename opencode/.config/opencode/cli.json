@@ -18,7 +18,7 @@
     "paste": "compact"
   },
   "session": {
-    "sidebar": "hide",
+    "sidebar": "auto",
     "scrollbar": false,
     "thinking": "hide",
     "markdown": "rendered",
@@ -42,6 +42,7 @@
   "plugins": [
     "opencode-vim@latest",
     "opencode-mini-session@latest",
-    "@streetturtle/opencode-recap"
+    "./tui-plugins/session-recap",
+    "./tui-plugins/rex-status"
   ]
 }
