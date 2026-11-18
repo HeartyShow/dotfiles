@@ -1,12 +1,6 @@
 [include]
     path = ~/.config/local/git.conf
 
-[credential]
-    helper = manager
-
-[credential "https://dev.azure.com"]
-    useHttpPath = true
-
 [pull]
   rebase = true
 
@@ -14,7 +8,9 @@
   autoStash = true
 
 [gpg]
-  format = openpgp
+  format = ssh
+[gpg "ssh"]
+  allowedSignersFile = ~/.config/local/allowed_signers
 
 [commit]
     gpgsign = true
