@@ -11,6 +11,9 @@
     mutableTaps = true;
   };
 
+  # Brew binaries on PATH for non-interactive shells too, like Rex popup commands
+  environment.systemPath = [ "${config.homebrew.prefix}/bin" ];
+
   homebrew = {
     enable = true;
     greedyCasks = true;
@@ -19,7 +22,7 @@
       upgrade = false;
       cleanup = "zap";
     };
-    taps = builtins.attrNames config.nix-homebrew.taps ++ [ "crmne/tap" "tonisives/tap" ];
+    taps = builtins.attrNames config.nix-homebrew.taps ++ [ "crmne/tap" "gammons/tap" "tonisives/tap" ];
     casks = [
       "betterdisplay"
       "bruno"
@@ -39,6 +42,7 @@
       "vlc"
       "vorssaint"
       "slack"
+      "gammons/tap/slk"
       "shottr"
       "zen"
     ];
