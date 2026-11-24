@@ -1,3 +1,5 @@
+local lib = require("lib")
+
 -- Like tmux, moving sideways into a column returns to the pane last used in that column.
 local column_memory = {}
 
@@ -42,18 +44,14 @@ local function neighbours(panes, from, direction)
 end
 
 local function tiled_panes(session_id)
-  local view = rex.call("session.view", { session_id = session_id })
-  for _, w in ipairs(view and view.windows or {}) do
-    if w.window_id == view.active_window_id then
-      for _, layer in ipairs(w.layers or {}) do
-        if layer.kind == "tiled" then
-          local panes, focused = leaves(layer.layout, {}), nil
-          for _, pane in ipairs(panes) do
-            if pane.block_id == w.focused_block_id then focused = pane end
-          end
-          return panes, focused
-        end
+  local window = lib.active_window(session_id)
+  for _, layer in ipairs(window and window.layers or {}) do
+    if layer.kind == "tiled" then
+      local panes, focused = leaves(layer.layout, {}), nil
+      for _, pane in ipairs(panes) do
+        if pane.block_id == window.focused_block_id then focused = pane end
       end
+      return panes, focused
     end
   end
   return {}, nil
@@ -71,9 +69,9 @@ local function focus(session_id, direction)
     end
   end
   if target ~= nil then
-    rex.call("session.focus_block", { session_id = session_id, block_id = target.block_id })
+    rex.session.focus_block{ session_id = session_id, block_id = target.block_id }
   else
-    rex.call("session.focus_direction", { session_id = session_id, direction = direction })
+    rex.session.focus_direction{ session_id = session_id, direction = direction }
     local _, focused = tiled_panes(session_id)
     target = focused
   end
@@ -84,7 +82,7 @@ local vim_names = { vim = true, nvim = true, view = true, vimdiff = true }
 
 -- Same detection as paul-enz/vim-rex-navigator: its Neovim half handles the key and calls `rex focus` at the edge.
 local function in_vim()
-  local ok, proc = pcall(rex.block.call, "com.superlogical.terminal", "process")
+  local ok, proc = pcall(rex.block.call, lib.terminal, "process")
   local fg = ok and proc and proc.foreground
   return fg ~= nil and (vim_names[fg.name] or vim_names[fg.argv0]) == true
 end

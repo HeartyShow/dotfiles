@@ -14,5 +14,5 @@ base="${base:-main}"
 # worktree-path override keeps the folder named exactly as typed (no sanitize_db).
 git fetch origin "$base" &&
   wt switch --create --yes --no-cd --base "origin/$base" --config-set "worktree-path=\"$container/$name\"" "$name" &&
-  "$REX_BIN_DIR/rex" -S "$REX_SERVER" do -s "$REX_SESSION" open_worktree path="$container/$name" background=true ||
+  "$REX_BIN_DIR/rex" do open_worktree path="$container/$name" background=true ||
   { printf 'Creating worktree %s failed.\nPress Enter to close.' "$name"; read -r _; exit 1; }

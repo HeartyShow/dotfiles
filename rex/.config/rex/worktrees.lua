@@ -36,41 +36,46 @@ local function open(session_id, path, background)
   local existing = tab_named(session_id, name)
   if existing then
     if background then return end
-    rex.call("session.focus_window", { session_id = session_id, window_id = existing })
+    rex.session.focus_window{ session_id = session_id, window_id = existing }
     return lib.show(session_id, existing)
   end
   local function block(command)
     return rex.layout.block{ flavor = lib.shell, options = { cwd = path, command = command } }
   end
-  local created = rex.call("session.new_window", {
+  local created = rex.session.new_window{
     session_id = session_id,
     window_label = name,
     focus = not background,
     layout = rex.layout.horizontal(0.4,
       rex.layout.vertical(0.75, block({ "nvim" }), block(nil)),
-      block({ "sh", "-c", "OPENCODE_DISABLE_TERMINAL_TITLE=1 opencode" })),
-  })
+      block({ "env", "OPENCODE_DISABLE_TERMINAL_TITLE=1", "opencode" })),
+  }
   -- Take the place of the build tab, which closes once its script exits.
   local placeholder = tab_named(session_id, pending .. name)
   if placeholder then
-    rex.call("session.move_window", { session_id = session_id, window_id = created.window_id, before_window_id = placeholder })
+    rex.session.move_window{ session_id = session_id, window_id = created.window_id, before_window_id = placeholder }
   end
   if not background then return lib.show(session_id, created.window_id) end
 end
 
 -- The worktree is built in a background tab that opens it when done, so the picker can close right away.
 local function create(session_id, repo, name)
-  return rex.call("session.new_window", {
+  return rex.session.new_window{
     session_id = session_id,
     window_label = pending .. name,
     focus = false,
     layout = rex.layout.block{ flavor = lib.shell, options = { cwd = repo, command = { "sh", build, name } } },
-  })
+  }
 end
 
-local function taken(list, name)
+-- The name becomes both the branch and a folder beside the others, so it can't climb out or look like a flag.
+local function invalid(list, name)
+  if name == "" then return "a name is required" end
+  if name:find("[^%w._/-]") or name:find("%.%.") or name:find("^[-/]") then
+    return name .. " is not a valid name (letters, digits, . _ - /)"
+  end
   for _, worktree in ipairs(list) do
-    if lib.basename(worktree.path) == name or worktree.branch == name then return true end
+    if lib.basename(worktree.path) == name or worktree.branch == name then return name .. " already exists" end
   end
 end
 
@@ -115,8 +120,9 @@ rex.action{
       if choice == nil then return end
       if type(choice) ~= "table" then return open(ctx.session_id, choice, false) end
       local name = choice.text:match("^%s*(.-)%s*$")
-      if name ~= "" and not taken(list, name) then return create(ctx.session_id, repo, name) end
-      title = name == "" and "Worktrees: a name is required" or ("Worktrees: " .. name .. " already exists")
+      local problem = invalid(list, name)
+      if problem == nil then return create(ctx.session_id, repo, name) end
+      title = "Worktrees: " .. problem
       value = name
     end
   end,
