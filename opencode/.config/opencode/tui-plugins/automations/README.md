@@ -19,15 +19,15 @@ Add the plugin folder to `plugins` in `cli.json`:
 ## Usage
 
 - `/automations` or `<leader>a`: every automation on the server, grouped by folder.
-  - `enter` details, `ctrl+t` pause/resume, `ctrl+d` twice to delete.
+  - `enter` details, `ctrl+a` this session / all, `ctrl+t` pause/resume, `ctrl+d` twice to delete.
 - Details window:
-  - **Runs**: `↑↓` or `ctrl+p/n` move, `enter` expand the output, `o` open the session the run woke.
+  - **Last run**: outcome, time, run count and output; `o` opens the session it woke.
   - **Trigger**: action, trigger and target, then the prompt or the formatted code.
 - Sidebar: the current session's automations, foldable; click one for its details.
 - A desktop notification when an automation runs while the terminal is not focused.
 
 ## Limitations
 
-- OpenCode publishes no automation events and keeps only the last run, so the plugin polls every 30 seconds and records run history itself. Runs that happen while no TUI is open collapse into the latest one.
+- OpenCode publishes no automation events and keeps only the last run, so the plugin polls every 30 seconds and shows that run only.
 - The picker uses `gutter` and `footerColor`, which the select dialog accepts but does not document.
 - Reformatting code drops its comments.

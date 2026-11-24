@@ -1,13 +1,11 @@
 /** @jsxImportSource @opentui/solid */
 import { createSignal, For, onCleanup, Show } from "solid-js"
 import { Plugin, usePlugin } from "@opencode/plugin/tui"
-import { RGBA, SyntaxStyle, TextAttributes, type ScrollBoxRenderable } from "@opentui/core"
+import { SyntaxStyle, TextAttributes, type ScrollBoxRenderable } from "@opentui/core"
 
-// Automations publish no events and keep no run history, so the list is polled and each change of a run's
-// outcome is recorded locally. Runs that happen while no TUI is open collapse into the latest one.
+// Automations publish no events, so the list is polled; a rising runCount is what triggers a notification.
 
 const POLL_MS = 30_000
-const MAX_RUNS = 50
 
 type Theme = Plugin.Context["theme"]
 
@@ -34,8 +32,6 @@ type Automation = {
   lastOutput?: string
   time: { updated: number }
 }
-
-type Run = { key: string; at: number; outcome: string; output?: string }
 
 const ICON = { active: "●", paused: "◌", done: "✓" }
 
@@ -66,19 +62,17 @@ function schedule(a: Automation) {
   return a.status === "active" && a.nextDueAt ? `next ${relative(a.nextDueAt)}` : a.status
 }
 
-function runKey(a: Automation) {
-  return `${a.runCount}|${a.lastOutcome}|${a.lastOutput}`
-}
-
 // A prompt run reports the session it woke, or the subagent child it started, in its output.
-function runSession(a: Automation, run: Run) {
-  return run.output?.match(/\bses_\w+/)?.[0] ?? a.sessionID
+function runSession(a: Automation) {
+  return a.lastOutput?.match(/\bses_\w+/)?.[0] ?? a.sessionID
 }
 
-function outcomeColor(theme: Theme, outcome?: string) {
-  if (outcome === "failed" || outcome === "expired") return theme.text.feedback.error.base
-  if (outcome === "late" || outcome === "skipped" || outcome === "disabled") return theme.text.feedback.warning.base
-  return theme.text.feedback.success.base
+type Kind = "info" | "success" | "warning" | "error"
+
+function outcomeKind(outcome: string): Kind {
+  if (outcome === "failed" || outcome === "expired") return "error"
+  if (outcome === "late" || outcome === "skipped" || outcome === "disabled") return "warning"
+  return "success"
 }
 
 function statusColor(theme: Theme, a: Automation) {
@@ -129,7 +123,7 @@ function codeStyle(theme: Theme, owner: Plugin.Context["renderer"]["nativeScene"
   )
 }
 
-function Pill(props: { label: string; kind?: "info" | "success" | "warning" }) {
+function Pill(props: { label: string; kind?: Kind }) {
   const context = usePlugin()
   const theme = context.theme
   return (
@@ -155,50 +149,30 @@ function Field(props: { label: string; value: string }) {
   )
 }
 
-function RunList(props: {
-  runs: Run[]
-  height: number
-  selected: number
-  expanded?: number
-  onSelect: (index: number) => void
-  onToggle: (index: number) => void
-  ref: (scroll: ScrollBoxRenderable) => void
-}) {
+function LastRunView(props: { automation: Automation; height: number; ref: (scroll: ScrollBoxRenderable) => void }) {
   const context = usePlugin()
-  const theme = context.theme
+  const a = props.automation
+  const fields = [
+    ["Ran", a.lastRunAt ? `${date(a.lastRunAt)} (${relative(a.lastRunAt)})` : undefined],
+    ["Runs", String(a.runCount)],
+    ["Next", a.status === "active" ? date(a.nextDueAt) : undefined],
+    ["Session", runSession(a)],
+  ].filter((field): field is [string, string] => Boolean(field[1]))
   return (
-    <scrollbox ref={props.ref} height={props.height}>
-      <For each={props.runs}>
-        {(run, index) => {
-          const active = () => props.selected === index()
-          return (
-            <box id={`run-${index()}`} onMouseOver={() => props.onSelect(index())} onMouseUp={() => props.onToggle(index())}>
-              <box
-                flexDirection="row"
-                gap={1}
-                paddingLeft={1}
-                paddingRight={1}
-                backgroundColor={active() ? theme.background.action.primary.focused : RGBA.fromInts(0, 0, 0, 0)}
-              >
-                <text fg={active() ? theme.text.action.primary.focused : outcomeColor(theme, run.outcome)}>●</text>
-                <text flexGrow={1} fg={active() ? theme.text.action.primary.focused : theme.text.base} wrapMode="none">
-                  {date(run.at)}
-                  <span style={{ fg: active() ? theme.text.action.secondary.focused : outcomeColor(theme, run.outcome) }}>
-                    {` ${run.outcome}`}
-                  </span>
-                </text>
-                <text fg={active() ? theme.text.action.secondary.focused : theme.text.muted}>{relative(run.at)}</text>
-              </box>
-              <Show when={props.expanded === index()}>
-                <box paddingLeft={3} paddingRight={1} paddingTop={1} paddingBottom={1}>
-                  <text fg={theme.text.muted}>{run.output || "No output"}</text>
-                </box>
-              </Show>
-            </box>
-          )
-        }}
-      </For>
-    </scrollbox>
+    <box height={props.height} gap={1}>
+      <Show when={a.lastOutcome}>
+        <box flexDirection="row" gap={1} flexShrink={0}>
+          <Pill label={a.lastOutcome!} kind={outcomeKind(a.lastOutcome!)} />
+          <Pill label={a.status} />
+        </box>
+        <box flexShrink={0}>
+          <For each={fields}>{([label, value]) => <Field label={label} value={value} />}</For>
+        </box>
+        <scrollbox ref={props.ref} flexGrow={1}>
+          <text fg={context.theme.text.base}>{a.lastOutput || "No output"}</text>
+        </scrollbox>
+      </Show>
+    </box>
   )
 }
 
@@ -237,42 +211,23 @@ function TriggerView(props: { automation: Automation; height: number; ref: (scro
   )
 }
 
-const TABS = ["Runs", "Trigger"] as const
+const TABS = ["Last run", "Trigger"] as const
 
-function Details(props: { automation: Automation; runs: Run[]; onOpen: (run: Run) => void }) {
+function Details(props: { automation: Automation; onOpen: () => void }) {
   const context = usePlugin()
   const theme = context.theme
   const a = props.automation
   const height = Math.max(8, Math.min(24, context.renderer.height - 14))
-  const [tab, setTab] = createSignal<(typeof TABS)[number]>("Runs")
-  const [selected, setSelected] = createSignal(0)
-  const [expanded, setExpanded] = createSignal<number>()
-  let runsScroll: ScrollBoxRenderable | undefined
-  let bodyScroll: ScrollBoxRenderable | undefined
-
-  const move = (delta: number) => {
-    if (tab() === "Trigger") return bodyScroll?.scrollBy(delta)
-    const next = Math.max(0, Math.min(props.runs.length - 1, selected() + delta))
-    setSelected(next)
-    runsScroll?.scrollChildIntoView(`run-${next}`)
-  }
-  const toggle = (index: number) => {
-    setSelected(index)
-    setExpanded((current) => (current === index ? undefined : index))
-  }
-  const openSelected = () => {
-    const run = props.runs[selected()]
-    if (tab() === "Runs" && run) props.onOpen(run)
-  }
+  const [tab, setTab] = createSignal<(typeof TABS)[number]>("Last run")
+  let scroll: ScrollBoxRenderable | undefined
 
   context.keymap.layer(() => ({
     mode: "modal",
     commands: [
-      { bind: "tab", run: () => setTab((current) => (current === "Runs" ? "Trigger" : "Runs")) },
-      { bind: "up,ctrl+p", run: () => move(-1) },
-      { bind: "down,ctrl+n", run: () => move(1) },
-      { bind: "return", run: () => (tab() === "Runs" && props.runs.length ? toggle(selected()) : undefined) },
-      { bind: "o", run: openSelected },
+      { bind: "tab", run: () => setTab((current) => (current === TABS[0] ? TABS[1] : TABS[0])) },
+      { bind: "up,ctrl+p", run: () => scroll?.scrollBy(-1) },
+      { bind: "down,ctrl+n", run: () => scroll?.scrollBy(1) },
+      { bind: "o", run: props.onOpen },
     ],
   }))
 
@@ -296,31 +251,19 @@ function Details(props: { automation: Automation; runs: Run[]; onOpen: (run: Run
                 attributes={tab() === name ? TextAttributes.BOLD | TextAttributes.UNDERLINE : 0}
                 selectable={false}
               >
-                {name === "Runs" ? `Runs (${props.runs.length})` : name}
+                {name}
               </text>
             </box>
           )}
         </For>
       </box>
-      <Show when={tab() === "Runs"}>
-        <RunList
-          runs={props.runs}
-          height={height}
-          selected={selected()}
-          expanded={expanded()}
-          onSelect={setSelected}
-          onToggle={toggle}
-          ref={(scroll) => (runsScroll = scroll)}
-        />
+      <Show when={tab() === "Last run"}>
+        <LastRunView automation={a} height={height} ref={(r) => (scroll = r)} />
       </Show>
       <Show when={tab() === "Trigger"}>
-        <TriggerView automation={a} height={height} ref={(scroll) => (bodyScroll = scroll)} />
+        <TriggerView automation={a} height={height} ref={(r) => (scroll = r)} />
       </Show>
-      <text fg={theme.text.muted}>
-        {tab() === "Runs"
-          ? "tab switch · ↑↓ move · enter expand · o open session · esc back"
-          : "tab switch · ↑↓ scroll · esc back"}
-      </text>
+      <text fg={theme.text.muted}>tab switch · ↑↓ scroll · o open session · esc back</text>
     </box>
   )
 }
@@ -375,23 +318,8 @@ function setup(context: Plugin.Context) {
   const api = context.client.experimental?.automation
   if (!api) return
   const [automations, setAutomations] = createSignal<Automation[]>([])
-  const [history, updateHistory] = context.storage.store<Record<string, Run[]>>("runs", { initial: {} })
   const [view, updateView] = context.storage.store("view", { initial: { open: true } })
   let runCounts: Map<string, number> | undefined
-
-  function record(list: Automation[]) {
-    const ids = new Set(list.map((a) => a.id))
-    const changed = list.filter((a) => a.lastOutcome && history[a.id]?.at(-1)?.key !== runKey(a))
-    const deleted = Object.keys(history).filter((id) => !ids.has(id))
-    if (changed.length === 0 && deleted.length === 0) return
-    void updateHistory((draft) => {
-      for (const id of deleted) delete draft[id]
-      for (const a of changed) {
-        const run = { key: runKey(a), at: a.lastRunAt ?? a.time.updated, outcome: a.lastOutcome!, output: a.lastOutput }
-        draft[a.id] = [...(draft[a.id] ?? []), run].slice(-MAX_RUNS)
-      }
-    })
-  }
 
   function notify(list: Automation[]) {
     for (const a of list) {
@@ -410,7 +338,6 @@ function setup(context: Plugin.Context) {
     const list = (await api.list().catch(() => undefined)) as Automation[] | undefined
     if (!list) return automations()
     notify(list)
-    record(list)
     setAutomations(list)
     return list
   }
@@ -424,9 +351,8 @@ function setup(context: Plugin.Context) {
       () => (
         <Details
           automation={a}
-          runs={[...(history[a.id] ?? [])].reverse()}
-          onOpen={(run) => {
-            const sessionID = runSession(a, run)
+          onOpen={() => {
+            const sessionID = runSession(a)
             if (!sessionID) return
             navigated = true
             context.ui.dialog.clear()
@@ -441,14 +367,24 @@ function setup(context: Plugin.Context) {
     context.ui.dialog.set({ size: "xlarge" })
   }
 
+  const currentSession = () => {
+    const route = context.ui.router.current()
+    return route.type === "session" ? route.sessionID : undefined
+  }
+  // Like OpenCode's session list, the picker opens on the current session's automations and ctrl+a shows all of them.
+  let showAll = false
+
   // `deleting` marks the row armed by a first ctrl+d, like OpenCode's session list. Options are static once shown,
   // so arming re-shows the picker from the last poll.
   async function showPicker(current?: string, deleting?: string) {
-    const list = deleting ? automations() : await poll()
-    if (list.length === 0) {
+    const everything = deleting ? automations() : await poll()
+    if (everything.length === 0) {
       context.ui.toast.show({ message: "No automations. Create one with /automation", variant: "info" })
       return
     }
+    const sessionID = currentSession()
+    const scoped = !showAll && sessionID !== undefined
+    const list = scoped ? everything.filter((a) => a.sessionID === sessionID) : everything
     const byID = new Map(list.map((a) => [a.id, a]))
     const refresh = (id: string, action: Promise<unknown>) =>
       action
@@ -467,7 +403,7 @@ function setup(context: Plugin.Context) {
       showDetails(a)
     }
     const picked = context.ui.dialog.select({
-      title: "Automations",
+      title: scoped ? "Automations in this session" : "Automations",
       current,
       // gutter, footerColor, bg and fg are undocumented: the host spreads options into its internal DialogSelect.
       options: list.map((a) => {
@@ -490,6 +426,19 @@ function setup(context: Plugin.Context) {
       }),
       actions: [
         { bind: "return", title: "Details", onTrigger: details },
+        ...(sessionID === undefined
+          ? []
+          : [
+              {
+                bind: "ctrl+a",
+                title: scoped ? "Show all" : "Show this session",
+                selection: "none" as const,
+                onTrigger: () => {
+                  showAll = !showAll
+                  void showPicker(current)
+                },
+              },
+            ]),
         {
           bind: "ctrl+t",
           title: "Pause/resume",
@@ -524,7 +473,10 @@ function setup(context: Plugin.Context) {
         bind: "<leader>a",
         palette: true,
         slash: { name: "automations" },
-        run: () => void showPicker(),
+        run: () => {
+          showAll = false
+          void showPicker()
+        },
       },
     ],
   }))
