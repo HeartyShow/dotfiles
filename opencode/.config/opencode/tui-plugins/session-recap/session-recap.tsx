@@ -164,9 +164,11 @@ ${transcript}`,
     }
   }
 
-  const stop = context.data.on("session.execution.succeeded", (event) => {
+  const stop = context.data.on("session.execution.succeeded", async (event) => {
     const sessionID = event.data.sessionID
     if (!sessionID || context.data.session.root(sessionID) !== sessionID) return
+    // The message cache can be empty on a session's first turn, which would count zero rounds.
+    await context.data.session.message.sync(sessionID)
     const recap = recaps[sessionID]
     const round = userRounds(sessionID)
     if (recap ? round - recap.round >= rounds : round > 0) void refresh(sessionID)
