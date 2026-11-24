@@ -20,6 +20,11 @@
     };
 
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+
+    # Upstream flake keeps per-platform node_modules hashes in sync, unlike nixpkgs (NixOS/nixpkgs#587973).
+    # Follows our nixpkgs: upstream's pinned bun is older than the one opencode requires and crashes at runtime.
+    opencode.url = "github:anomalyco/opencode/v2.3.2";
+    opencode.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, home-manager, nixos-wsl, nix-darwin, ... }@inputs: 

@@ -1,13 +1,41 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  rexurrect = pkgs.rustPlatform.buildRustPackage rec {
+    pname = "rexurrect";
+    version = "0.4.0";
+    src = pkgs.fetchFromGitHub {
+      owner = "cemcatik";
+      repo = "rexurrect";
+      rev = "v${version}";
+      hash = "sha256-YNXqF6I/6KIESo07JHiONCD5PlgR6my9C/tvA++Spco=";
+    };
+    cargoHash = "sha256-Da8mPDmYtHkzG5QW0t8W3N1KNp1WduSy3oBcQ/FAs5A=";
+    doCheck = false;
+    postInstall = "install -Dm644 rexurrect.plugin.zsh $out/share/rexurrect/rexurrect.plugin.zsh";
+  };
+in {
 
   fonts.packages = [ pkgs.nerd-fonts.jetbrains-mono ];
+
+  environment.systemPackages = [ rexurrect ];
+
+  launchd.user.agents.rexurrect-autosave.serviceConfig = {
+    # rexurrect calls `rex`, which launchd's default PATH doesn't have
+    ProgramArguments = [
+      "/bin/sh"
+      "-c"
+      ''PATH="$HOME/Library/Application Support/com.superlogical.rex/RexServer/Versions/Current/Rex Server.app/Contents/MacOS:$PATH" exec ${rexurrect}/bin/rexurrect save''
+    ];
+    StartInterval = 900;
+  };
 
   system.defaults.CustomUserPreferences."com.superlogical.rex" = {
     "rex.agents.names-sessions" = false;
     "rex.client.remoteControl" = true;
-
+    "rex.developer-mode-enabled" = true;
+    RexAppUpdateChannel = "snapshot";
     "Workspace.activePaneBorderColor" = "accent";
-    "Workspace.activePaneBorderOpacity" = 1.0;
+    "Workspace.activePaneBorderOpacity" = 0.8;
     "Workspace.activePaneBorderTransition" = "fade";
     "Workspace.allowsTerminalNotifications" = true;
     "Workspace.animationStyle" = "snappy";
@@ -28,11 +56,11 @@
     "Workspace.showsProcessesInActivity" = true;
     "Workspace.sidebarPosition" = "left";
     "Workspace.sidebarShowsActivity" = false;
+    "Workspace.tabBarEdge" = "bottom";
     "Workspace.tabIconColorMode" = "always";
     "Workspace.tabIconCount" = 3;
     "Workspace.tabIconTintMode" = "off";
     "Workspace.tabStyle" = "vertical";
-
     "Workspace.terminalCopyOnSelect" = true;
     "Workspace.terminalCursorBlinkIntervalMilliseconds" = 500;
     "Workspace.terminalCursorBlinkUsesCustomInterval" = false;
