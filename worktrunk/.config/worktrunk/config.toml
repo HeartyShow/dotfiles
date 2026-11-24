@@ -1,11 +1,5 @@
 # Worktrunk global configuration
-# Manages git worktrees with tmux window integration
-#
-# Workflow:
-#   sesh picks the project (tmux session)
-#   prefix+g opens worktree picker (television)
-#   worktrunk creates/switches worktree branch
-#   hooks create tmux windows with nvim + terminal + opencode panes
+# Worktrees are created by the Rex worktree picker (ctrl+space>w), see rex/.config/rex/scripts/worktrees.sh
 
 # Worktree path: subdirectory of the project root (bare repo layout)
 # .git/ is the bare repo, worktrees are siblings: project/main/, project/feature/, etc.
@@ -16,7 +10,3 @@ worktree-path = "{{ repo_path }}/../{{ branch | sanitize_db }}"
 # When a new worktree is created, install tools via mise if configured
 [post-start]
 setup = "[ -f .mise.toml ] && mise install --yes 2>/dev/null || true"
-
-# Auto-cleanup: kill tmux window when worktree is removed or merged
-[post-remove]
-tmux-cleanup = '[ -n "$TMUX" ] && tmux kill-window -t "{{ branch | sanitize }}" 2>/dev/null || true'
