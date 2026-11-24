@@ -34,6 +34,11 @@
 - Keep diagrams concise: favour fewer nodes with clear labels over exhaustive detail.
 - Do NOT use pie charts — they are not rendered; use a table instead.
 
+## Pull requests
+- Never push or open/update a PR before I review the changes, unless I explicitly say to go ahead without review.
+- Review flow: whenever you want a review (e.g. before publishing or updating a PR), follow the `/tuicr-open` command steps with the `tuicr_review` tool, address my comments, then ask before pushing.
+- An auto-accept answer to `tuicr_review` means I trust the code: it counts as reviewed.
+
 ## Behavior
 - Always check for existing tests before modifying logic.
 - When unsure about a framework API, use context7 to check current

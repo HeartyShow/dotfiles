@@ -7,7 +7,8 @@
     "leader": "ctrl+o",
     "input.submit": "return",
     "input.newline": "shift+return",
-    "session.aside": "<leader>k"
+    "session.aside": "<leader>k",
+    "agent.list": "none"
   },
   "diffs": {
     "wrap": "word",
@@ -43,6 +44,8 @@
     "opencode-vim@latest",
     "opencode-mini-session@latest",
     "./tui-plugins/session-recap",
-    "./tui-plugins/rex-status"
+    "./tui-plugins/rex-status",
+    "./tui-plugins/automations",
+    "./tui-plugins/mcp-retry"
   ]
 }

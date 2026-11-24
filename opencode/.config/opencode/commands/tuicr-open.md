@@ -1,14 +1,15 @@
 ---
-description: Open tuicr in a Rex popup on the changes to review, then address my comments
+description: Ask to review the changes in tuicr, then address my comments
 ---
 
-Open tuicr so I can review, wait for me to close it, then address my comments.
+Ask me to review the changes in tuicr, then act on my answer.
 
 1. Pick the scope to review:
    - The changes made in this conversation: uncommitted only `-w`; commits only `-r <oldest>~1..<newest>`; both `-r <oldest>~1..HEAD -w`.
    - If this conversation made no changes, review the current branch: `-r <merge-base with origin's default branch>..HEAD`, plus `-w` if the tree is dirty.
    - State the chosen scope in one line.
-2. Run `sh ~/.config/rex/scripts/tuicr-review.sh <scope>` with no timeout. It returns once I close tuicr and prints my comments.
+2. Call the `tuicr_review` tool with the scope as `args` and a one-line `summary`. It returns once I answer, and if I chose to review, once I close tuicr.
+   - If I answered not-now or auto-accept, follow what the result says and stop here.
 3. Address the comments:
    - If it prints `NO TUICR SESSION` or no comments, say so and stop.
    - `issue`: fix it.

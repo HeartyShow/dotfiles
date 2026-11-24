@@ -11,15 +11,14 @@
   ],
   "share": "disabled",
   "autoupdate": true,
-  "plugin": [
-    "@tarquinen/opencode-dcp"
+  "plugins": [
+    "./plugins/tuicr-review"
   ],
   "lsp": true,
-  "compaction": {
-    "auto": false
-  },
   "experimental": {
-    "artifacts": true
+    "artifacts": true,
+    "automations": true,
+    "mcp_events": true
   },
   "mcp": {
     "context7": {
