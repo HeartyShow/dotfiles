@@ -173,6 +173,7 @@ export GPG_TTY=$(tty)
 
 # Rex panes restored after a server restart lose its PATH entry but keep REX_BIN_DIR
 [ -n "$REX_BIN_DIR" ] && export PATH="$REX_BIN_DIR:$PATH"
+(( $+commands[rexurrect] )) && source "${commands[rexurrect]:A:h:h}/share/rexurrect/rexurrect.plugin.zsh"
 
 alias buildx="docker-buildx"
 

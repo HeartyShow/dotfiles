@@ -1,0 +1,11 @@
+no_scrollback = ["claude", "nvim", "opencode"]
+auto_resume = ["nvim", "opencode"]
+
+# LazyVim's persistence.nvim keeps one session per directory.
+[programs.nvim]
+resume = "nvim -c 'lua require(\"persistence\").load()'"
+requires_file = ""
+
+[programs.opencode]
+match = ["opencode", ".opencode-wrapped"]
+resume = "opencode -c"
