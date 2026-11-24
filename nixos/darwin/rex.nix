@@ -37,17 +37,22 @@ in {
     "Workspace.activePaneBorderColor" = "accent";
     "Workspace.activePaneBorderOpacity" = 0.8;
     "Workspace.activePaneBorderTransition" = "fade";
+    "Workspace.activityGrouping" = "priority";
     "Workspace.allowsTerminalNotifications" = true;
     "Workspace.animationStyle" = "snappy";
     "Workspace.appIcon" = "default";
     "Workspace.balancesSplitsOnCreation" = true;
+    # Catppuccin Mocha, imported from Ghostty in Settings > Themes > Import Theme. Rex keeps custom themes
+    # as binary data in its preferences, so a new machine needs that import once before this ID resolves.
     "Workspace.darkThemeID" = "custom-02E754FA-6933-471C-AE0E-8A4D34066EF8";
     "Workspace.focusFollowsMouse" = false;
+    "Workspace.hiddenPaneButtons" = [ "close" "float" "minimize" "splitDown" "splitRight" "zoom" ];
     "Workspace.inactivePaneFadeMode" = "both";
     "Workspace.interfaceStyle" = "useTheme";
     "Workspace.lightThemeID" = "merino-light";
     "Workspace.notificationPosition" = "top-right";
     "Workspace.paneDensity" = "compact";
+    "Workspace.paneHeaderVisibility" = "always";
     "Workspace.preservesWindowWidthOnSidebarToggle" = true;
     "Workspace.shellIconTheme" = "themed";
     "Workspace.showsActivePaneBorder" = false;
@@ -56,11 +61,13 @@ in {
     "Workspace.showsProcessesInActivity" = true;
     "Workspace.sidebarPosition" = "left";
     "Workspace.sidebarShowsActivity" = false;
+    "Workspace.sidebarSwipe" = "off";
     "Workspace.tabBarEdge" = "bottom";
     "Workspace.tabIconColorMode" = "always";
     "Workspace.tabIconCount" = 3;
     "Workspace.tabIconTintMode" = "off";
     "Workspace.tabStyle" = "vertical";
+    "Workspace.terminalCopyAnimation" = true;
     "Workspace.terminalCopyOnSelect" = true;
     "Workspace.terminalCursorBlinkIntervalMilliseconds" = 500;
     "Workspace.terminalCursorBlinkUsesCustomInterval" = false;
