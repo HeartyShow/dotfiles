@@ -1,10 +1,10 @@
-import { spawn } from "node:child_process"
-import { homedir } from "node:os"
+import { execFile } from "node:child_process"
 import { join } from "node:path"
+import { promisify } from "node:util"
 import { Plugin } from "@opencode/plugin"
 import { TuicrReview } from "./rpc.js"
 
-const SCRIPT = join(homedir(), ".config/rex/scripts/tuicr-review.sh")
+const exec = promisify(execFile)
 
 const CLOSED = {
   "not-now": "The user answered Not now to the review request: they do not want a review process right now. This is not an approval of the changes; decide from the context what to do next.",
@@ -14,20 +14,38 @@ const CLOSED = {
 // Each location loads its own plugin instance, and the TUI may answer through another location than the tool call's.
 const requests = (globalThis[Symbol.for("tuicr-review.requests")] ??= new Map())
 
-function run(args, cwd, rexSession, signal) {
-  return new Promise((resolve) => {
-    const child = spawn("sh", [SCRIPT, ...args], {
-      cwd,
-      env: { ...process.env, REX_SESSION: rexSession },
-      signal,
-    })
-    let stdout = ""
-    let stderr = ""
-    child.stdout.on("data", (chunk) => (stdout += chunk))
-    child.stderr.on("data", (chunk) => (stderr += chunk))
-    child.on("error", (error) => resolve(`tuicr review failed: ${error.message}`))
-    child.on("close", (code) => resolve(code === 0 ? stdout : `tuicr review failed (exit ${code}):\n${stderr}${stdout}`))
-  })
+// Opens tuicr in a Rex popup, waits for it to close, then returns the review's comments.
+async function run(args, cwd, rexSession, signal) {
+  const sh = async (cmd, argv, dir = cwd) => (await exec(cmd, argv, { cwd: dir, signal, maxBuffer: 16 << 20 })).stdout.trim()
+  const rex = (...argv) => sh(join(process.env.REX_BIN_DIR, "rex"), argv)
+
+  try {
+    const root = await sh("git", ["rev-parse", "--show-toplevel"])
+    const popup = JSON.parse(await rex("do", "-s", rexSession, "--json", "popup_tuicr", `cwd=${root}`, `args=${args.join(" ")}`))
+    // A failed tuicr, or a popup closed before the wait started, still means the review is over.
+    await rex("wait", "-s", rexSession, popup.block_ids[0]).catch(() => {})
+
+    const sessions = JSON.parse(await sh("tuicr", ["review", "list", "--repo", root]))
+    const latest = sessions
+      .filter((session) => session.kind === "local")
+      .sort((a, b) => a.updated_at.localeCompare(b.updated_at))
+      .at(-1)
+    if (!latest) return "NO TUICR SESSION"
+
+    const comments = JSON.parse(await sh("tuicr", ["review", "comments", "--repo", root, "--session", latest.slug]))
+    return [
+      `Repo: ${root}`,
+      `Session: ${latest.slug}`,
+      `Current HEAD: ${await sh("git", ["rev-parse", "--short", "HEAD"], root)}`,
+      JSON.stringify(
+        comments.map(({ location, comment_type, author, content }) => ({ location, comment_type, author, content })),
+        null,
+        2,
+      ),
+    ].join("\n")
+  } catch (error) {
+    return `tuicr review failed: ${error.stderr || error.message}`
+  }
 }
 
 export default Plugin.define({
