@@ -1,3 +1,6 @@
+defaults:
+  refetchIntervalMinutes: 5
+smartFilteringAtLaunch: false
 prSections:
   - title: My Pull Requests
     filters: is:open author:@me
@@ -17,7 +20,10 @@ keybindings:
     - key: C
       name: code review
       command: >
-        tmux new-window -n "PR-{{.PrNumber}}" 'tuicr pr {{.RepoName}}#{{.PrNumber}}'
+        if [ -n "$REX_SESSION" ];
+        then rex window new -s "$REX_SESSION" "PR-{{.PrNumber}}" -- tuicr pr {{.RepoName}}#{{.PrNumber}};
+        else tmux new-window -n "PR-{{.PrNumber}}" 'tuicr pr {{.RepoName}}#{{.PrNumber}}';
+        fi
 pager:
   diff: delta
 theme:

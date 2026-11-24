@@ -82,8 +82,8 @@ local function persistent_popup(name, title, command, width, height)
   }
 end
 
-popup("popup_gh_dash", "GitHub Dashboard (gh-dash)", { "gh-dash" }, 0.95, 0.9)
 popup("popup_tuicr", "Review Worktree Changes (tuicr)", { "tuicr" }, 0.95, 0.9)
+persistent_popup("popup_gh_dash", "GitHub Dashboard (gh-dash)", { "gh-dash" }, 0.95, 0.9)
 persistent_popup("popup_slack", "Slack (slk)", { "slk" }, 0.95, 0.9)
 persistent_popup("popup_assistant", "Assistant (OpenCode)", { "sh", lib.home .. "/.config/opencode-assistant/assistant.sh" }, 0.95, 0.9)
 
