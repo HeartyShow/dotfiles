@@ -22,10 +22,7 @@ local function navigate(wincmd, direction)
     return vim.fn.win_getid(vim.fn.winnr(wincmd))
   end)
   if target == from then
-    vim.system({
-      vim.env.REX_BIN_DIR .. "/rex", "-S", vim.env.REX_SERVER,
-      "do", "-s", vim.env.REX_SESSION, "focus_pane", "direction=" .. direction,
-    })
+    vim.system({ vim.env.REX_BIN_DIR .. "/rex", "do", "focus_pane", "direction=" .. direction })
   elseif from == win then
     vim.cmd.wincmd(wincmd)
   else
