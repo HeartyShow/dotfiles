@@ -7,7 +7,8 @@
     "leader": "ctrl+o",
     "input.submit": "return",
     "input.newline": "shift+return",
-    "session.aside": "<leader>k"
+    "session.aside": "<leader>k",
+    "agent.list": "none"
   },
   "prompt": {
     "paste": "full"
@@ -25,6 +26,7 @@
     "title": false
   },
   "plugins": [
-    "opencode-vim@latest"
+    "opencode-vim@latest",
+    "../opencode/tui-plugins/automations"
   ]
 }
